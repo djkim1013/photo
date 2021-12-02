@@ -24,6 +24,5 @@ public class Photo {
 
     @ManyToOne
     @JoinColumn(name = "folder_id")
-    @Column(name = "photo_path")
     private Folder path;
 }
