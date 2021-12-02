@@ -22,7 +22,6 @@ public class Folder {
     @Column(name = "folder_regdate")
     private LocalDateTime regdate;
 
-    @OneToMany(mappedBy = "photo")
-    @Column(name = "photo_list")
+    @OneToMany(mappedBy = "path")
     private List<Photo> photos = new ArrayList<>();
 }
