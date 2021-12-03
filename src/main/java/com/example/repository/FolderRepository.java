@@ -32,4 +32,5 @@ public class FolderRepository {
                 .setParameter("name", name)
                 .getResultList();
     }
+
 }
