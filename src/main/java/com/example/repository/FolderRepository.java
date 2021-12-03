@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
+//@RequiredArgsConstructor
 public class FolderRepository {
 
     @PersistenceContext
