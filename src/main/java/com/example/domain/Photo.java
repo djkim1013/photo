@@ -21,17 +21,10 @@ public class Photo {
     private String memo;
 
     @Column(name = "photo_regdate")
-    private LocalDateTime regdate;
+    private LocalDateTime regDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "folder_id")
     private Folder path;
 
-    protected Photo(){
-    }
-
-    public Photo(String name, String memo){
-        this.name = name;
-        this.memo = memo;
-    }
 }

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter
+@Getter @Setter
 public class Folder {
 
     @Id @GeneratedValue
@@ -20,17 +20,10 @@ public class Folder {
     private String name;
 
     @Column(name = "folder_regdate")
-    private LocalDateTime regdate;
+    private LocalDateTime regDate;
 
     @OneToMany(mappedBy = "path", cascade = CascadeType.ALL)
     private List<Photo> photos = new ArrayList<>();
-
-    protected Folder(){
-    }
-
-    public Folder(String name){
-        this.name = name;
-    }
 
     public void addPhoto(Photo photo){
         photos.add(photo);
