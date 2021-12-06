@@ -64,9 +64,8 @@ class FolderRepositoryTest {
     public void updateFolderByName() throws Exception{
         Folder folder = new Folder();
         folder.setName("folder1");
-
         folderRepository.save(folder);
-
+        folder = folderRepository.findByName("folder1");
         folderService.updateFolderName(folder.getId(),"folder2");
 
         assertEquals(folder,folderRepository.findByName("folder2"));
