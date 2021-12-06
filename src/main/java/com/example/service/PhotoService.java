@@ -15,29 +15,38 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PhotoService {
 
-    //컴파일 시점에 생성 보장을 위해 final 선언
     private final PhotoRepository photoRepository;
-    
-    /**
-    * 사진 저장
-    */
+    private final FolderRepository folderRepository;
+
+    //사진 저장
     @Transactional
-    public Long save(Photo photo){
+    public Long savePhoto(Photo photo){
         photoRepository.save(photo);
         return photo.getId();
     }
 
-    /**
-     * 모든 사진 조회
-     */
-    public List<Photo> findPhotos(){
+    //모든 사진 조회
+    public List<Photo> findAllPhotos(){
         return photoRepository.findAll();
     }
 
-    /**
-     * 사진 이름으로 조회
-     */
-    public List<Photo> findPhotoByName(String name){
+    //사진 이름으로 조회
+    public Photo findPhotoByName(String name){
         return photoRepository.findByName(name);
     }
+
+    //사진 경로로 조회
+    public List<Photo> findPhotosByFolderId(String path){
+        Folder folder = folderRepository.findByName(path);
+        return photoRepository.findAllByFolderId(folder.getId());
+    }
+    
+    //사진 저장 날짜로 조회
+    //public List<Photo> findPhotoByDate(LocalDateTime regdate){}
+
+    //사진 삭제
+    public void deletePhotoById(Long id){
+        photoRepository.deleteById(id);
+    }
+
 }

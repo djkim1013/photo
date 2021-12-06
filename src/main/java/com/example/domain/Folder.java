@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter @Setter
+@Getter
 public class Folder {
 
     @Id @GeneratedValue
@@ -17,6 +17,7 @@ public class Folder {
     private Long id;
 
     @Column(name = "folder_name")
+    @Setter
     private String name;
 
     @Column(name = "folder_regdate")
