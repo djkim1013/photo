@@ -1,36 +1,9 @@
 package com.example.repository;
 
 import com.example.domain.Folder;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import java.util.List;
-
-@Repository
-//@RequiredArgsConstructor
-public class FolderRepository {
-
-    @PersistenceContext
-    private EntityManager em;
-
-    public void save(Folder folder){
-        em.persist(folder);
-    }
-
-    public Folder findOne(Long id){
-        return em.find(Folder.class, id);
-    }
-
-    public List<Folder> findAll(){
-        return em.createQuery("select f from Folder f", Folder.class)
-                .getResultList();
-    }
-
-    public List<Folder> findByName(String name){
-        return em.createQuery("select f from Folder f where f.name in :name", Folder.class)
-                .setParameter("name", name)
-                .getResultList();
-    }
-
+public interface FolderRepository extends JpaRepository<Folder, Long> {
+    //JpaRepository : entity를 관리하는 명령어 interface. generic 설정에 따라 JPA가 자동으로 구현체를 생성한다.
+    // JpaRepository = CRUD + Pagination ... 기본 CRUD와 페이징 기능을 모두 포함한 Repository interface
 }

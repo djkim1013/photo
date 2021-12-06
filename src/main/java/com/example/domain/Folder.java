@@ -29,5 +29,4 @@ public class Folder {
         photos.add(photo);
         photo.setPath(this);
     }
-
 }
