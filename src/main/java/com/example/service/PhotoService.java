@@ -36,10 +36,9 @@ public class PhotoService {
     }
 
     //사진 경로로 조회
-//    public List<Photo> findPhotosByFolderId(String path){
-//        Folder folder = folderRepository.findByName(path);
-//        return photoRepository.findAllByFolderId(folder.getId());
-//    }
+    public List<Photo> findPhotosByFolderId(String path){
+        return folderRepository.findByName(path).getPhotos();
+    }
     
     //사진 저장 날짜로 조회
     //public List<Photo> findPhotoByDate(LocalDateTime regdate){}
