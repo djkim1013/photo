@@ -70,4 +70,13 @@ class FolderRepositoryTest {
 
         assertEquals(folder,folderRepository.findByName("folder2"));
     }
+
+    @Test
+    @Rollback(false)
+    public void createdDate() throws Exception{
+        Folder folder = new Folder();
+        folder.setName("folder1");
+        folderRepository.save(folder);
+        assertNotEquals(folderRepository.findByName("folder1").getCreatedDate(),null);
+    }
 }

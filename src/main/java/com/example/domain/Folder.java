@@ -2,16 +2,14 @@ package com.example.domain;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter //@Setter
-public class Folder {
+public class Folder extends BaseAuditingEntity {
 
     @Id @GeneratedValue
     @Column(name = "folder_id")
@@ -21,9 +19,9 @@ public class Folder {
     @Setter
     private String name;
 
-    @Column(name = "folder_regdate")
-    @CreatedDate
-    private LocalDateTime regDate;
+//    @Column(name = "folder_regdate")
+//    @CreatedDate
+//    private LocalDateTime regDate;
 
     @OneToMany(mappedBy = "path", cascade = CascadeType.ALL)
     private List<Photo> photos = new ArrayList<>();
