@@ -1,2 +1,44 @@
-# photo
-spring boot toy project - photo album
+# [ SpringBoot & JPA 를 활용한 사진첩 구현 ]
+
+## 1. 기본 개념 리뷰
+### Spring Framework
+	
+### SpringBoot
+	
+### ORM (JPA)
+
+***
+## 2. 사진첩 구현
+1. 요구사항
+  - 간단한 사진첩
+  - 폴더 :
+    - 폴더명
+    - 폴더 생성 날짜
+  - 사진(실제 이미지가 아닌 사진 정보) :
+    - 사진명
+    - 사진 메모
+    - 사진 생성 날짜
+    - 사진 경로(폴더)
+  - API :
+    - 폴더 API :
+      - 조회
+      - 추가
+      - 이름 수정
+      - 삭제
+    - 사진 API :
+      - 조회
+      - 저장(추가)
+      - 삭제
+  - 기술 요구 사항 : Java 8, H2 database, SpringBoot, JPA
+2. 기본 설계
+  - 디자인 패턴
+  - DB 설계
+3. 상세 설계
+  - 
+4. 구현
+
+
+6. 테스트
+
+
+
