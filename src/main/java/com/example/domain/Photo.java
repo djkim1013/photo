@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter //@Setter
-public class Photo {
+public class Photo extends BaseAuditingEntity{
     @Id @GeneratedValue
     @Column(name = "photo_id")
     private Long id;
@@ -23,9 +23,9 @@ public class Photo {
     @Setter
     private String memo;
 
-    @Column(name = "photo_regdate")
-    @CreatedDate
-    private LocalDateTime regDate;
+//    @Column(name = "photo_regdate")
+//    @CreatedDate
+//    private LocalDateTime regDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "folder_id")
