@@ -19,10 +19,6 @@ public class Folder extends BaseAuditingEntity {
     @Setter
     private String name;
 
-//    @Column(name = "folder_regdate")
-//    @CreatedDate
-//    private LocalDateTime regDate;
-
     @OneToMany(mappedBy = "path", cascade = CascadeType.ALL)
     private List<Photo> photos = new ArrayList<>();
 

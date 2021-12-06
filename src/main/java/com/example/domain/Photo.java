@@ -23,10 +23,6 @@ public class Photo extends BaseAuditingEntity{
     @Setter
     private String memo;
 
-//    @Column(name = "photo_regdate")
-//    @CreatedDate
-//    private LocalDateTime regDate;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "folder_id")
     @Setter

@@ -77,6 +77,6 @@ class FolderRepositoryTest {
         Folder folder = new Folder();
         folder.setName("folder1");
         folderRepository.save(folder);
-        assertNotEquals(folderRepository.findByName("folder1").getCreatedDate(),null);
+        assertNotEquals(folderRepository.findByName("folder1").getRegDate(),null);
     }
 }
