@@ -9,27 +9,27 @@ import java.time.LocalDateTime;
 
 
 @Entity
-@Getter @Setter
+@Getter //@Setter
 public class Photo {
     @Id @GeneratedValue
     @Column(name = "photo_id")
     private Long id;
 
     @Column(name = "photo_name")
-//    @Setter
+    @Setter
     private String name;
 
     @Column(name = "photo_memo")
-//    @Setter
+    @Setter
     private String memo;
 
     @Column(name = "photo_regdate")
-//    @CreatedDate
+    @CreatedDate
     private LocalDateTime regDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "folder_id")
-//    @Setter
+    @Setter
     private Folder path;
 
 }
