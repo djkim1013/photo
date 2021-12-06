@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter @Setter
+@Getter //@Setter
 public class Folder {
 
     @Id @GeneratedValue
@@ -18,11 +18,11 @@ public class Folder {
     private Long id;
 
     @Column(name = "folder_name")
-//    @Setter
+    @Setter
     private String name;
 
     @Column(name = "folder_regdate")
-//    @CreatedDate
+    @CreatedDate
     private LocalDateTime regDate;
 
     @OneToMany(mappedBy = "path", cascade = CascadeType.ALL)
