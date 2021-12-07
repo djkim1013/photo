@@ -2,6 +2,7 @@ package com.example.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -19,11 +20,16 @@ public class Folder extends BaseAuditingEntity {
     @Setter
     private String name;
 
-    @OneToMany(mappedBy = "path", cascade = CascadeType.ALL)
+//    @BatchSize(size = 1000)
+    @OneToMany(mappedBy = "path", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Photo> photos = new ArrayList<>();
 
     public void addPhoto(Photo photo){
         photos.add(photo);
         photo.setPath(this);
+    }
+
+    public void reName(String name){
+        this.name = name;
     }
 }

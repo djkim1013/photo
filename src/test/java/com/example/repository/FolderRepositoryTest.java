@@ -27,7 +27,8 @@ class FolderRepositoryTest {
         folder.setName("folder1");
 
         Long saveId = folderService.createFolder(folder);
-        assertEquals(folder,folderRepository.findById(saveId));
+
+        assertNotEquals(folderRepository.findById(saveId).get(),null);
     }
 
     @Test
@@ -44,7 +45,8 @@ class FolderRepositoryTest {
         folderService.createFolder(folder3);
 
         List<Folder> folderList = folderRepository.findAll();
-        assertNotEquals(folderList.size(),0);
+
+        assertEquals(folderList.size(),3);
 
     }
 
@@ -56,7 +58,7 @@ class FolderRepositoryTest {
 
         Long saveId = folderService.createFolder(folder);
 
-        assertEquals(folder,folderRepository.findByName("folder1"));
+        assertEquals(folderRepository.findByName("folder1").getId(),saveId);
     }
 
     @Test
@@ -65,8 +67,9 @@ class FolderRepositoryTest {
         Folder folder = new Folder();
         folder.setName("folder1");
         folderRepository.save(folder);
-        folder = folderRepository.findByName("folder1");
-        folderService.updateFolderName(folder.getId(),"folder2");
+
+        folder.setName("folder2");
+        folderService.updateFolder(1l,folder);
 
         assertEquals(folder,folderRepository.findByName("folder2"));
     }
@@ -77,6 +80,8 @@ class FolderRepositoryTest {
         Folder folder = new Folder();
         folder.setName("folder1");
         folderRepository.save(folder);
+
         assertNotEquals(folderRepository.findByName("folder1").getRegDate(),null);
     }
+
 }
