@@ -9,23 +9,20 @@ import java.time.LocalDateTime;
 
 
 @Entity
-@Getter //@Setter
+@Getter
 public class Photo extends BaseAuditingEntity{
     @Id @GeneratedValue
     @Column(name = "photo_id")
     private Long id;
 
     @Column(name = "photo_name")
-    @Setter
     private String name;
 
     @Column(name = "photo_memo")
-    @Setter
     private String memo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "folder_id")
-    @Setter
     private Folder path;
 
 }
