@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter //@Setter
+@Getter
 public class Folder extends BaseAuditingEntity {
 
     @Id @GeneratedValue
@@ -17,7 +17,6 @@ public class Folder extends BaseAuditingEntity {
     private Long id;
 
     @Column(name = "folder_name")
-    @Setter
     private String name;
 
 //    @BatchSize(size = 1000)
@@ -26,7 +25,7 @@ public class Folder extends BaseAuditingEntity {
 
     public void addPhoto(Photo photo){
         photos.add(photo);
-        photo.setPath(this);
+//        photo.setPath(this);
     }
 
     public void reName(String name){
