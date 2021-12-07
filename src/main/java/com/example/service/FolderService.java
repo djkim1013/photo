@@ -31,15 +31,20 @@ public class FolderService {
 
     //폴더 이름으로 조회
     public Folder findFolderByName(String name){
-        return folderRepository.findByName(name);
+        Folder byName = folderRepository.findByName(name);
+
+        byName.reName("newName");
+
+
+        return byName;
     }
 
     //폴더 이름 변경
     @Transactional
-    public void updateFolderName(Long id, String name){
-        Optional<Folder> folder = folderRepository.findById(id);
-        folder.get().setName(name);
-        folderRepository.save(folder.get());
+    public void updateFolder(Long id, Folder folderNew){
+        Folder folder = folderRepository.findById(id).get();
+        folder = folderNew;
+        folderRepository.save(folder);
     }
 
     //폴더 삭제
