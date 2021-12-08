@@ -23,7 +23,7 @@ public class PhotoApiController {
         //사진 이름 중복 확인
         if(photoService.findPhotoByName(photo.getName()) != null)
             return -1l;
-        return photoService.savePhoto(photo);
+        return photoService.create(photo);
     }
 
     //get

@@ -14,6 +14,8 @@ public class PhotoDto {
 
     private String name;
 
+    private String memo;
+
     private LocalDateTime regDate;
 
     private String path;

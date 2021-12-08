@@ -23,8 +23,6 @@ public class PhotoEntity extends BaseAuditingEntity {
     @JoinColumn(name = "folder_id")
     private FolderEntity path;
 
-    private String address;
-
     public void reName(String name){
         this.name = name;
     }
