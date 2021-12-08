@@ -22,7 +22,7 @@ public class PhotoService {
 
     //사진 저장
     @Transactional
-    public Long savePhoto(PhotoDto photoDto){
+    public Long create(PhotoDto photoDto){
         PhotoEntity photoEntity = new PhotoEntity();
         photoEntity.reName(photoDto.getName());
         photoEntity.mvPath(folderRepository.findByName(photoDto.getPath()));
