@@ -4,6 +4,8 @@ package com.example.domain;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 public class PhotoDto {
@@ -12,7 +14,7 @@ public class PhotoDto {
 
     private String name;
 
-    private FolderDto path;
+    private LocalDateTime regDate;
 
-
+    private String path;
 }

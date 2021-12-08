@@ -24,33 +24,38 @@ public class FolderService {
     public Long createFolder(FolderDto folderDTO){
         FolderEntity folderEntity = new FolderEntity();
         folderEntity.reName(folderDTO.getName());
-        folderEntity = folderRepository.save(folderEntity);
-        return folderEntity.getId();
+        FolderEntity folderEntityCreated = folderRepository.save(folderEntity);
+        return folderEntityCreated.getId();
     }
 
     //모든 폴더 조회
     public List<FolderDto> findAllFolders(){
-        List<FolderEntity> resultEntity = folderRepository.findAll();
-        List<FolderDto> resultDto = new ArrayList<>();
-        for(FolderEntity e : resultEntity){
+        List<FolderEntity> folderEntityList = folderRepository.findAll();
+        List<FolderDto> folderDtoList = new ArrayList<>();
+        for(FolderEntity e : folderEntityList){
             FolderDto d = new FolderDto();
             d.setName(e.getName());
-            resultDto.add(d);
+            d.setRegDate(e.getRegDate());
+            folderDtoList.add(d);
         }
-        return resultDto;
+        return folderDtoList;
     }
 
-    //폴더 이름으로 조회
-    public FolderEntity findFolderByName(String name){
-        FolderEntity byName = folderRepository.findByName(name);
-        return byName;
+    //폴더 조건으로 조회
+    public FolderDto findFolderByName(String name){
+        FolderEntity folderEntity = folderRepository.findByName(name);
+        if(folderEntity == null) return null;
+        FolderDto folderDto = new FolderDto();
+        folderDto.setName(folderEntity.getName());
+        folderDto.setRegDate(folderEntity.getRegDate());
+        return folderDto;
     }
 
     //폴더 이름 변경
     @Transactional
-    public void updateFolder(Long id, FolderEntity folderNew){
+    public void updateFolder(Long id, FolderDto folderDto){
         FolderEntity folder = folderRepository.findById(id).get();
-        folder.reName(folderNew.getName());
+        folder.reName(folderDto.getName());
     }
 
     //폴더 삭제
