@@ -5,7 +5,7 @@ import lombok.Getter;
 import javax.persistence.*;
 
 
-@Entity
+@Entity(name = "photo")
 @Getter
 public class PhotoEntity extends BaseAuditingEntity {
 
@@ -25,7 +25,11 @@ public class PhotoEntity extends BaseAuditingEntity {
 
     private String address;
 
-    public void setPath(FolderEntity path){
+    public void reName(String name){
+        this.name = name;
+    }
+
+    public void mvPath(FolderEntity path){
         this.path = path;
     }
 

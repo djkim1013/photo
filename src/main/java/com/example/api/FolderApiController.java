@@ -1,7 +1,6 @@
 package com.example.api;
 
 import com.example.domain.FolderDto;
-import com.example.entity.FolderEntity;
 import com.example.service.FolderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -15,40 +14,43 @@ public class FolderApiController {
 
     private final FolderService folderService;
 
+    //post
+    //폴더 생성
+    @PostMapping
+    public Long create(@RequestBody FolderDto folder){
+        //폴더 이름 중복 확인
+        if(folderService.findFolderByName(folder.getName()) != null)
+            return -1l;
+        return folderService.createFolder(folder);
+    }
+
     //get
     //폴더 모두 조회
     @GetMapping
-    public List<FolderDto> getAllFolders(){
+    public List<FolderDto> getAll(){
         return folderService.findAllFolders();
     }
 
     //폴더 이름으로 조회
-    @GetMapping("/{folderName}")
-    public FolderEntity getFolderByName(@PathVariable String folderName){
+    @GetMapping("/name")
+    public FolderDto getByName(@RequestParam String folderName){
         return folderService.findFolderByName(folderName);
-    }
-
-    //post
-    //폴더 생성
-    @PostMapping
-    public Long createFolder(@RequestBody FolderEntity folder){
-        return folderService.createFolder(folder);
     }
 
     //put
     //폴더 이름 수정
-    @PutMapping("/{bookId}")
-    public Long updateFolder(@PathVariable Long bookId,
-                             @RequestBody FolderEntity folder){
-        folderService.updateFolder(bookId,folder);
-        return bookId;
+    @PutMapping("/{folderId}")
+    public Long update(@PathVariable Long folderId,
+                       @RequestBody FolderDto folderDto){
+        folderService.updateFolder(folderId, folderDto);
+        return folderId;
     }
 
     //del
     //폴더 삭제
-    @DeleteMapping("/{bookId}")
-    public Long deleteFolder(@PathVariable Long bookId){
-        folderService.deleteFolder(bookId);
-        return bookId;
+    @DeleteMapping("/{folderId}")
+    public Long delete(@PathVariable Long folderId){
+        folderService.deleteFolder(folderId);
+        return folderId;
     }
 }
