@@ -1,6 +1,6 @@
 package com.example.service;
 
-import com.example.entity.Photo;
+import com.example.entity.PhotoEntity;
 import com.example.repository.FolderRepository;
 import com.example.repository.PhotoRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,28 +20,28 @@ public class PhotoService {
 
     //사진 저장
     @Transactional
-    public Long savePhoto(Photo photo){
+    public Long savePhoto(PhotoEntity photo){
         photoRepository.save(photo);
         return photo.getId();
     }
 
     //모든 사진 조회
-    public List<Photo> findAllPhotos(){
+    public List<PhotoEntity> findAllPhotos(){
         return photoRepository.findAll();
     }
 
     //사진 이름으로 조회
-    public Photo findPhotoByName(String name){
+    public PhotoEntity findPhotoByName(String name){
         return photoRepository.findByName(name);
     }
 
     //사진 경로로 조회
-    public List<Photo> findPhotosByPath(String path){
+    public List<PhotoEntity> findPhotosByPath(String path){
         return folderRepository.findByName(path).getPhotos();
     }
     
     //사진 저장 날짜로 조회
-    public List<Photo> findPhotosByDate(LocalDateTime start, LocalDateTime end){
+    public List<PhotoEntity> findPhotosByDate(LocalDateTime start, LocalDateTime end){
         if(start == null) start = LocalDateTime.MIN;
         if(end == null) end = LocalDateTime.MAX;
         return photoRepository.findAllByRegDateBetween(start,end);

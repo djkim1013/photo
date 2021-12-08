@@ -1,6 +1,6 @@
 package com.example.repository;
 
-import com.example.entity.Folder;
+import com.example.entity.FolderEntity;
 import com.example.service.FolderService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +23,8 @@ class FolderRepositoryTest {
     @Test
     @Rollback(false)
     public void addFolder() throws Exception{
-        Folder folder = new Folder();
-        folder.setName("folder1");
+        FolderEntity folder = new FolderEntity();
+        folder.reName("folder1");
 
         Long saveId = folderService.createFolder(folder);
 
@@ -34,17 +34,17 @@ class FolderRepositoryTest {
     @Test
     @Rollback(false)
     public void findAllFolders() throws Exception{
-        Folder folder1 = new Folder();
-        folder1.setName("folder1");
+        FolderEntity folder1 = new FolderEntity();
+        folder1.reName("folder1");
         folderService.createFolder(folder1);
-        Folder folder2 = new Folder();
-        folder2.setName("folder2");
+        FolderEntity folder2 = new FolderEntity();
+        folder2.reName("folder2");
         folderService.createFolder(folder2);
-        Folder folder3 = new Folder();
-        folder3.setName("folder3");
+        FolderEntity folder3 = new FolderEntity();
+        folder3.reName("folder3");
         folderService.createFolder(folder3);
 
-        List<Folder> folderList = folderRepository.findAll();
+        List<FolderEntity> folderList = folderRepository.findAll();
 
         assertEquals(folderList.size(),3);
 
@@ -53,8 +53,8 @@ class FolderRepositoryTest {
     @Test
     @Rollback(false)
     public void findFolderByName() throws Exception{
-        Folder folder = new Folder();
-        folder.setName("folder1");
+        FolderEntity folder = new FolderEntity();
+        folder.reName("folder1");
 
         Long saveId = folderService.createFolder(folder);
 
@@ -64,11 +64,11 @@ class FolderRepositoryTest {
     @Test
     @Rollback(false)
     public void updateFolderByName() throws Exception{
-        Folder folder = new Folder();
-        folder.setName("folder1");
+        FolderEntity folder = new FolderEntity();
+        folder.reName("folder1");
         folderRepository.save(folder);
 
-        folder.setName("folder2");
+        folder.reName("folder2");
         folderService.updateFolder(1l,folder);
 
         assertEquals(folder,folderRepository.findByName("folder2"));
@@ -77,8 +77,8 @@ class FolderRepositoryTest {
     @Test
     @Rollback(false)
     public void createdDate() throws Exception{
-        Folder folder = new Folder();
-        folder.setName("folder1");
+        FolderEntity folder = new FolderEntity();
+        folder.reName("folder1");
         folderRepository.save(folder);
 
         assertNotEquals(folderRepository.findByName("folder1").getRegDate(),null);

@@ -1,6 +1,10 @@
 package com.example.entity;
 
+import com.example.domain.FolderDto;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
@@ -9,7 +13,7 @@ import java.util.List;
 
 @Entity
 @Getter
-public class Folder extends BaseAuditingEntity {
+public class FolderEntity extends BaseAuditingEntity {
 
     @Id @GeneratedValue
     @Column(name = "folder_id")
@@ -20,13 +24,11 @@ public class Folder extends BaseAuditingEntity {
 
     @BatchSize(size = 1000)
     @OneToMany(mappedBy = "path", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Photo> photos = new ArrayList<>();
+    private List<PhotoEntity> photos = new ArrayList<>();
 
     public void reName(String name){
         this.name = name;
     }
-
-
 
 //    public void addPhoto(Photo photo){
 //        photos.add(photo);

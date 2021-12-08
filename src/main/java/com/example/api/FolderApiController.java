@@ -1,6 +1,7 @@
 package com.example.api;
 
-import com.example.entity.Folder;
+import com.example.domain.FolderDto;
+import com.example.entity.FolderEntity;
 import com.example.service.FolderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -17,20 +18,20 @@ public class FolderApiController {
     //get
     //폴더 모두 조회
     @GetMapping
-    public List<Folder> getAllFolders(){
+    public List<FolderDto> getAllFolders(){
         return folderService.findAllFolders();
     }
 
     //폴더 이름으로 조회
     @GetMapping("/{folderName}")
-    public Folder getFolderByName(@PathVariable String folderName){
+    public FolderEntity getFolderByName(@PathVariable String folderName){
         return folderService.findFolderByName(folderName);
     }
 
     //post
     //폴더 생성
     @PostMapping
-    public Long createFolder(@RequestBody Folder folder){
+    public Long createFolder(@RequestBody FolderEntity folder){
         return folderService.createFolder(folder);
     }
 
@@ -38,7 +39,7 @@ public class FolderApiController {
     //폴더 이름 수정
     @PutMapping("/{bookId}")
     public Long updateFolder(@PathVariable Long bookId,
-                             @RequestBody Folder folder){
+                             @RequestBody FolderEntity folder){
         folderService.updateFolder(bookId,folder);
         return bookId;
     }
