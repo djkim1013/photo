@@ -1,16 +1,14 @@
-package com.example.domain;
+package com.example.entity;
 
 import lombok.Getter;
-import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 
 @Entity
 @Getter
-public class Photo extends BaseAuditingEntity{
+public class Photo extends BaseAuditingEntity {
+
     @Id @GeneratedValue
     @Column(name = "photo_id")
     private Long id;
@@ -24,5 +22,11 @@ public class Photo extends BaseAuditingEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "folder_id")
     private Folder path;
+
+    private String address;
+
+    public void setPath(Folder path){
+        this.path = path;
+    }
 
 }

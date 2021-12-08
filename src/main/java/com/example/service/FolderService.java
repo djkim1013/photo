@@ -1,6 +1,6 @@
 package com.example.service;
 
-import com.example.domain.Folder;
+import com.example.entity.Folder;
 import com.example.repository.FolderRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -32,10 +31,6 @@ public class FolderService {
     //폴더 이름으로 조회
     public Folder findFolderByName(String name){
         Folder byName = folderRepository.findByName(name);
-
-        byName.reName("newName");
-
-
         return byName;
     }
 
@@ -43,8 +38,7 @@ public class FolderService {
     @Transactional
     public void updateFolder(Long id, Folder folderNew){
         Folder folder = folderRepository.findById(id).get();
-        folder = folderNew;
-        folderRepository.save(folder);
+        folder.reName(folderNew.getName());
     }
 
     //폴더 삭제
