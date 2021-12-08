@@ -1,13 +1,16 @@
 package com.example.service;
 
-import com.example.entity.Folder;
+import com.example.domain.FolderDto;
+import com.example.entity.FolderEntity;
 import com.example.repository.FolderRepository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -18,26 +21,35 @@ public class FolderService {
     
     //폴더 생성
     @Transactional
-    public Long createFolder(Folder folder){
-        folderRepository.save(folder);
-        return folder.getId();
+    public Long createFolder(FolderDto folderDTO){
+        FolderEntity folderEntity = new FolderEntity();
+        folderEntity.reName(folderDTO.getName());
+        folderEntity = folderRepository.save(folderEntity);
+        return folderEntity.getId();
     }
 
     //모든 폴더 조회
-    public List<Folder> findAllFolders(){
-        return folderRepository.findAll();
+    public List<FolderDto> findAllFolders(){
+        List<FolderEntity> resultEntity = folderRepository.findAll();
+        List<FolderDto> resultDto = new ArrayList<>();
+        for(FolderEntity e : resultEntity){
+            FolderDto d = new FolderDto();
+            d.setName(e.getName());
+            resultDto.add(d);
+        }
+        return resultDto;
     }
 
     //폴더 이름으로 조회
-    public Folder findFolderByName(String name){
-        Folder byName = folderRepository.findByName(name);
+    public FolderEntity findFolderByName(String name){
+        FolderEntity byName = folderRepository.findByName(name);
         return byName;
     }
 
     //폴더 이름 변경
     @Transactional
-    public void updateFolder(Long id, Folder folderNew){
-        Folder folder = folderRepository.findById(id).get();
+    public void updateFolder(Long id, FolderEntity folderNew){
+        FolderEntity folder = folderRepository.findById(id).get();
         folder.reName(folderNew.getName());
     }
 

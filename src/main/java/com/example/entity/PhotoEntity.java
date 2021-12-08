@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-public class Photo extends BaseAuditingEntity {
+public class PhotoEntity extends BaseAuditingEntity {
 
     @Id @GeneratedValue
     @Column(name = "photo_id")
@@ -21,11 +21,11 @@ public class Photo extends BaseAuditingEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "folder_id")
-    private Folder path;
+    private FolderEntity path;
 
     private String address;
 
-    public void setPath(Folder path){
+    public void setPath(FolderEntity path){
         this.path = path;
     }
 
