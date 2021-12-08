@@ -1,6 +1,6 @@
 package com.example.api;
 
-import com.example.domain.Folder;
+import com.example.entity.Folder;
 import com.example.service.FolderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

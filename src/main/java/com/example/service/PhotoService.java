@@ -1,7 +1,6 @@
 package com.example.service;
 
-import com.example.domain.Folder;
-import com.example.domain.Photo;
+import com.example.entity.Photo;
 import com.example.repository.FolderRepository;
 import com.example.repository.PhotoRepository;
 import lombok.RequiredArgsConstructor;

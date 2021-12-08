@@ -1,6 +1,6 @@
 package com.example.repository;
 
-import com.example.domain.Folder;
+import com.example.entity.Folder;
 import com.example.service.FolderService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
