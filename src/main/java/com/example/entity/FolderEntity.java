@@ -28,9 +28,4 @@ public class FolderEntity extends BaseAuditingEntity {
         this.name = name;
     }
 
-//    public void addPhoto(Photo photo){
-//        photos.add(photo);
-//        photo.setPath(this);
-//    }
-
 }

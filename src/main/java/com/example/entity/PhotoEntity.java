@@ -20,7 +20,7 @@ public class PhotoEntity extends BaseAuditingEntity {
     @Column(name = "photo_memo")
     private String memo;
 
-    @ManyToOne  //(fetch = FetchType.LAZY) -> default to many-to-#
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "folder_id")
     private FolderEntity path;
 

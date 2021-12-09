@@ -31,19 +31,19 @@ public class PhotoApiController {
     }
 
     //사진 이름으로 조회
-    @GetMapping("/name")
+    @GetMapping(params = {"name"})
     public PhotoDto getByName(@RequestParam String photoName){
         return photoService.findPhotoByName(photoName);
     }
 
     //사진 경로로 조회
-    @GetMapping("/path")
-    public List<PhotoDto> getByPath(@RequestParam String path){
+    @GetMapping(params = {"path"})
+    public List<PhotoDto> getByPath(@RequestParam Long path){
         return photoService.findPhotosByPath(path);
     }
 
     //사진 날짜로 조회
-    @GetMapping("/between")
+    @GetMapping(params = {"start","end"})
     public List<PhotoDto> getByDate(@RequestParam LocalDateTime startDate,
                                     @RequestParam LocalDateTime endDate){
         return photoService.findPhotosByDate(startDate,endDate);
