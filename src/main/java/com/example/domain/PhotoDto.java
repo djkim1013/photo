@@ -18,5 +18,5 @@ public class PhotoDto {
 
     private LocalDateTime regDate;
 
-    private String path;
+    private Long path;
 }

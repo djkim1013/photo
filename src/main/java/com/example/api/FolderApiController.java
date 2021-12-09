@@ -18,9 +18,6 @@ public class FolderApiController {
     //폴더 생성
     @PostMapping
     public Long create(@RequestBody FolderDto folder){
-        //폴더 이름 중복 확인
-        if(folderService.findFolderByName(folder.getName()) != null)
-            return -1l;
         return folderService.createFolder(folder);
     }
 

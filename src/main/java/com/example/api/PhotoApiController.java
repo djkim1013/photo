@@ -20,9 +20,6 @@ public class PhotoApiController {
 
     @PostMapping
     public Long create(@RequestBody PhotoDto photo){
-        //사진 이름 중복 확인
-        if(photoService.findPhotoByName(photo.getName()) != null)
-            return -1l;
         return photoService.create(photo);
     }
 
