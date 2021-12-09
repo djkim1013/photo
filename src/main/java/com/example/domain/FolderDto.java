@@ -16,6 +16,6 @@ public class FolderDto {
 
     private LocalDateTime regDate;
 
-    private List<PhotoDto> photos;
+//    private List<PhotoDto> photos;
 
 }

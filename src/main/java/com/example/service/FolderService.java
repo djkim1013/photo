@@ -43,6 +43,7 @@ public class FolderService {
     //폴더 이름 변경
     @Transactional
     public void updateFolder(Long id, FolderDto folderDto){
+        //need null check
         FolderEntity folder = folderRepository.findById(id).get();
         folder.reName(folderDto.getName());
     }
