@@ -1,7 +1,6 @@
 package com.example.api;
 
 import com.example.domain.FolderDto;
-import com.example.entity.FolderEntity;
 import com.example.service.FolderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -31,17 +30,17 @@ public class FolderApiController {
 
     //폴더 이름으로 조회
     @GetMapping(params = {"name"})
-    public FolderDto getFolderByName(@RequestParam String name){
-        return folderService.findFolderByName(name);
+    public FolderDto getFolderByName(@RequestParam(name= "name") String folderName){
+        return folderService.findFolderByName(folderName);
     }
 
     //put
     //폴더 이름 수정
-    @PutMapping("/{bookId}")
-    public Long updateFolder(@PathVariable Long bookId,
+    @PutMapping("/{folderId}")
+    public Long updateFolder(@PathVariable Long folderId,
                              @RequestBody FolderDto folderDto){
-        folderService.updateFolder(bookId, folderDto);
-        return bookId;
+        folderService.updateFolder(folderId, folderDto);
+        return folderId;
     }
 
     //del

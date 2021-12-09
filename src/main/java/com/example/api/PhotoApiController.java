@@ -3,6 +3,7 @@ package com.example.api;
 import com.example.domain.PhotoDto;
 import com.example.service.PhotoService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -32,7 +33,7 @@ public class PhotoApiController {
 
     //사진 이름으로 조회
     @GetMapping(params = {"name"})
-    public PhotoDto getByName(@RequestParam String photoName){
+    public PhotoDto getByName(@RequestParam(name = "name") String photoName){
         return photoService.findPhotoByName(photoName);
     }
 
@@ -44,8 +45,9 @@ public class PhotoApiController {
 
     //사진 날짜로 조회
     @GetMapping(params = {"start","end"})
-    public List<PhotoDto> getByDate(@RequestParam LocalDateTime startDate,
-                                    @RequestParam LocalDateTime endDate){
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+    public List<PhotoDto> getByDate(@RequestParam(name="start") LocalDateTime startDate,
+                                    @RequestParam(name="end") LocalDateTime endDate){
         return photoService.findPhotosByDate(startDate,endDate);
     }
 

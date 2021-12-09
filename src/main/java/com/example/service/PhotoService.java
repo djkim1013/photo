@@ -1,6 +1,7 @@
 package com.example.service;
 
 import com.example.domain.PhotoDto;
+import com.example.entity.FolderEntity;
 import com.example.entity.PhotoEntity;
 import com.example.repository.FolderRepository;
 import com.example.repository.PhotoRepository;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -44,8 +46,9 @@ public class PhotoService {
     }
 
     //사진 경로로 조회
-    public List<PhotoDto> findPhotosByPath(Long path){
-        List<PhotoEntity> photoEntityList = folderRepository.findById(path).get().getPhotos();
+    public List<PhotoDto> findPhotosByPath(Long folderId){
+        List<PhotoEntity> photoEntityList = folderRepository.findById(folderId).get().getPhotos();
+        //need null check
         return getPhotoDtoList(photoEntityList);
     }
 
@@ -68,7 +71,7 @@ public class PhotoService {
         photoDto.setId(photoEntity.getId());
         photoDto.setName(photoEntity.getName());
         photoDto.setMemo(photoEntity.getMemo());
-//        photoDto.setPath(photoEntity.getPath().getId());
+        photoDto.setPath(photoEntity.getPath().getId());
         photoDto.setRegDate(photoEntity.getRegDate());
         return photoDto;
     }
