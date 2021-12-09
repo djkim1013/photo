@@ -25,7 +25,8 @@ public class PhotoService {
     public Long create(PhotoDto photoDto){
         PhotoEntity photoEntity = new PhotoEntity();
         photoEntity.reName(photoDto.getName());
-        photoEntity.mvPath(folderRepository.findByName(photoDto.getPath()));
+        photoEntity.modMemo(photoDto.getMemo());
+        photoEntity.mvPath(folderRepository.findById(photoDto.getPath()).get());
         PhotoEntity photoEntityCreated = photoRepository.save(photoEntity);
         return photoEntityCreated.getId();
     }
@@ -71,7 +72,8 @@ public class PhotoService {
         for(PhotoEntity e : photoEntityList){
             PhotoDto d = new PhotoDto();
             d.setName(e.getName());
-            d.setPath(e.getPath().getName());
+            d.setMemo(e.getMemo());
+            d.setPath(e.getPath().getId());
             d.setRegDate(e.getRegDate());
             photoDtoList.add(d);
         }

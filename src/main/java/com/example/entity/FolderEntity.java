@@ -21,6 +21,7 @@ public class FolderEntity extends BaseAuditingEntity {
 
     @BatchSize(size = 1000)
     @OneToMany(mappedBy = "path", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @OneToMany(mappedBy = "path", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<PhotoEntity> photos = new ArrayList<>();
 
     public void reName(String name){

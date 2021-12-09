@@ -13,18 +13,23 @@ public class PhotoEntity extends BaseAuditingEntity {
     @Column(name = "photo_id")
     private Long id;
 
-    @Column(name = "photo_name")
+    @Column(name = "photo_name",
+            unique = true)
     private String name;
 
     @Column(name = "photo_memo")
     private String memo;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne  //(fetch = FetchType.LAZY) -> default to many-to-#
     @JoinColumn(name = "folder_id")
     private FolderEntity path;
 
     public void reName(String name){
         this.name = name;
+    }
+
+    public void modMemo(String memo){
+        this.memo = memo;
     }
 
     public void mvPath(FolderEntity path){
