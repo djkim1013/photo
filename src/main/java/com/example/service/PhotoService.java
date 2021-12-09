@@ -40,16 +40,12 @@ public class PhotoService {
     //사진 이름으로 조회
     public PhotoDto findPhotoByName(String name){
         PhotoEntity photoEntity = photoRepository.findByName(name);
-        if(photoEntity == null) return null;
-        PhotoDto photoDto = new PhotoDto();
-        photoDto.setName(photoEntity.getName());
-        photoDto.setRegDate(photoEntity.getRegDate());
-        return photoDto;
+        return entityToDto(photoEntity);
     }
 
     //사진 경로로 조회
-    public List<PhotoDto> findPhotosByPath(String path){
-        List<PhotoEntity> photoEntityList = folderRepository.findByName(path).getPhotos();
+    public List<PhotoDto> findPhotosByPath(Long path){
+        List<PhotoEntity> photoEntityList = folderRepository.findById(path).get().getPhotos();
         return getPhotoDtoList(photoEntityList);
     }
 
@@ -67,15 +63,20 @@ public class PhotoService {
         photoRepository.deleteById(id);
     }
 
+    private PhotoDto entityToDto(PhotoEntity photoEntity){
+        PhotoDto photoDto = new PhotoDto();
+        photoDto.setId(photoEntity.getId());
+        photoDto.setName(photoEntity.getName());
+        photoDto.setMemo(photoEntity.getMemo());
+//        photoDto.setPath(photoEntity.getPath().getId());
+        photoDto.setRegDate(photoEntity.getRegDate());
+        return photoDto;
+    }
+
     private List<PhotoDto> getPhotoDtoList(List<PhotoEntity> photoEntityList) {
         List<PhotoDto> photoDtoList = new ArrayList<>();
-        for(PhotoEntity e : photoEntityList){
-            PhotoDto d = new PhotoDto();
-            d.setName(e.getName());
-            d.setMemo(e.getMemo());
-            d.setPath(e.getPath().getId());
-            d.setRegDate(e.getRegDate());
-            photoDtoList.add(d);
+        for(PhotoEntity photoEntity : photoEntityList){
+            photoDtoList.add(entityToDto(photoEntity));
         }
         return photoDtoList;
     }

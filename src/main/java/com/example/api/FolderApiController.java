@@ -1,6 +1,7 @@
 package com.example.api;
 
 import com.example.domain.FolderDto;
+import com.example.entity.FolderEntity;
 import com.example.service.FolderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -17,37 +18,37 @@ public class FolderApiController {
     //post
     //폴더 생성
     @PostMapping
-    public Long create(@RequestBody FolderDto folder){
+    public Long createFolder(@RequestBody FolderDto folder){
         return folderService.createFolder(folder);
     }
 
     //get
     //폴더 모두 조회
     @GetMapping
-    public List<FolderDto> getAll(){
+    public List<FolderDto> getAllFolders(){
         return folderService.findAllFolders();
     }
 
     //폴더 이름으로 조회
-    @GetMapping("/name")
-    public FolderDto getByName(@RequestParam String folderName){
-        return folderService.findFolderByName(folderName);
+    @GetMapping(params = {"name"})
+    public FolderDto getFolderByName(@RequestParam String name){
+        return folderService.findFolderByName(name);
     }
 
     //put
     //폴더 이름 수정
-    @PutMapping("/{folderId}")
-    public Long update(@PathVariable Long folderId,
-                       @RequestBody FolderDto folderDto){
-        folderService.updateFolder(folderId, folderDto);
-        return folderId;
+    @PutMapping("/{bookId}")
+    public Long updateFolder(@PathVariable Long bookId,
+                             @RequestBody FolderDto folderDto){
+        folderService.updateFolder(bookId, folderDto);
+        return bookId;
     }
 
     //del
     //폴더 삭제
-    @DeleteMapping("/{folderId}")
-    public Long delete(@PathVariable Long folderId){
-        folderService.deleteFolder(folderId);
-        return folderId;
+    @DeleteMapping("/{bookId}")
+    public Long deleteFolder(@PathVariable Long bookId){
+        folderService.deleteFolder(bookId);
+        return bookId;
     }
 }

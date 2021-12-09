@@ -31,24 +31,13 @@ public class FolderService {
     //모든 폴더 조회
     public List<FolderDto> findAllFolders(){
         List<FolderEntity> folderEntityList = folderRepository.findAll();
-        List<FolderDto> folderDtoList = new ArrayList<>();
-        for(FolderEntity e : folderEntityList){
-            FolderDto d = new FolderDto();
-            d.setName(e.getName());
-            d.setRegDate(e.getRegDate());
-            folderDtoList.add(d);
-        }
-        return folderDtoList;
+        return entityListToDtoList(folderEntityList);
     }
 
     //폴더 조건으로 조회
     public FolderDto findFolderByName(String name){
         FolderEntity folderEntity = folderRepository.findByName(name);
-        if(folderEntity == null) return null;
-        FolderDto folderDto = new FolderDto();
-        folderDto.setName(folderEntity.getName());
-        folderDto.setRegDate(folderEntity.getRegDate());
-        return folderDto;
+        return entityToDto(folderEntity);
     }
 
     //폴더 이름 변경
@@ -62,5 +51,21 @@ public class FolderService {
     @Transactional
     public void deleteFolder(Long id){
         folderRepository.deleteById(id);
+    }
+
+    private FolderDto entityToDto(FolderEntity folderEntity){
+        FolderDto folderDto = new FolderDto();
+        folderDto.setId(folderEntity.getId());
+        folderDto.setName(folderEntity.getName());
+        folderDto.setRegDate(folderEntity.getRegDate());
+        return folderDto;
+    }
+
+    private List<FolderDto> entityListToDtoList(List<FolderEntity> folderEntityList){
+        List<FolderDto> folderDtoList = new ArrayList<>();
+        for(FolderEntity folderEntity : folderEntityList){
+            folderDtoList.add(entityToDto(folderEntity));
+        }
+        return folderDtoList;
     }
 }
