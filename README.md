@@ -1,5 +1,9 @@
 # [ SpringBoot & JPA 를 활용한 사진첩 구현 ]
 
+## 사양
+
+- SpringBoot, Spring JPA, H2 DataBase
+
 ## API
 
 ### 폴더 생성
