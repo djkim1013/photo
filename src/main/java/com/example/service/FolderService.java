@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -22,14 +21,15 @@ public class FolderService {
     //폴더 생성
     @Transactional
     public Long createFolder(FolderDto folderDTO){
-        FolderEntity folderEntity = new FolderEntity();
-        folderEntity.reName(folderDTO.getName());
+        FolderEntity folderEntity = FolderEntity.builder()
+                .name(folderDTO.getName())
+                .build();
         FolderEntity folderEntityCreated = folderRepository.save(folderEntity);
         return folderEntityCreated.getId();
     }
 
     //모든 폴더 조회
-    public List<FolderDto> findAllFolders(){
+    public List<FolderDto> findAllFolderList(){
         List<FolderEntity> folderEntityList = folderRepository.findAll();
         return entityListToDtoList(folderEntityList);
     }
@@ -45,7 +45,7 @@ public class FolderService {
     public void updateFolder(Long id, FolderDto folderDto){
         //need null check
         FolderEntity folder = folderRepository.findById(id).get();
-        folder.reName(folderDto.getName());
+        folder.updateFolder(folderDto);
     }
 
     //폴더 삭제
@@ -54,14 +54,16 @@ public class FolderService {
         folderRepository.deleteById(id);
     }
 
+    //entity 정보값을 가진 dto 생성
     private FolderDto entityToDto(FolderEntity folderEntity){
-        FolderDto folderDto = new FolderDto();
-        folderDto.setId(folderEntity.getId());
-        folderDto.setName(folderEntity.getName());
-        folderDto.setRegDate(folderEntity.getRegDate());
-        return folderDto;
+        return FolderDto.builder()
+                .id(folderEntity.getId())
+                .regDate(folderEntity.getRegDate())
+                .name(folderEntity.getName())
+                .build();
     }
 
+    //entity 리스트의 정보값을 가진 dto 리스트 생성
     private List<FolderDto> entityListToDtoList(List<FolderEntity> folderEntityList){
         List<FolderDto> folderDtoList = new ArrayList<>();
         for(FolderEntity folderEntity : folderEntityList){

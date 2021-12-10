@@ -14,18 +14,16 @@ public class FolderApiController {
 
     private final FolderService folderService;
 
-    //post
     //폴더 생성
     @PostMapping
     public Long createFolder(@RequestBody FolderDto folder){
         return folderService.createFolder(folder);
     }
 
-    //get
     //폴더 모두 조회
     @GetMapping
-    public List<FolderDto> getAllFolders(){
-        return folderService.findAllFolders();
+    public List<FolderDto> getAllFolderList(){
+        return folderService.findAllFolderList();
     }
 
     //폴더 이름으로 조회
@@ -34,7 +32,6 @@ public class FolderApiController {
         return folderService.findFolderByName(folderName);
     }
 
-    //put
     //폴더 이름 수정
     @PutMapping("/{folderId}")
     public Long updateFolder(@PathVariable Long folderId,
@@ -43,7 +40,6 @@ public class FolderApiController {
         return folderId;
     }
 
-    //del
     //폴더 삭제
     @DeleteMapping("/{bookId}")
     public Long deleteFolder(@PathVariable Long bookId){

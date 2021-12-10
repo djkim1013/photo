@@ -3,10 +3,8 @@ package com.example.api;
 import com.example.domain.PhotoDto;
 import com.example.service.PhotoService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -16,19 +14,16 @@ public class PhotoApiController {
 
     private final PhotoService photoService;
 
-    //post
     //사진 저장
-
     @PostMapping
     public Long create(@RequestBody PhotoDto photo){
-        return photoService.create(photo);
+        return photoService.createPhoto(photo);
     }
 
-    //get
     //사진 모두 조회
     @GetMapping
     public List<PhotoDto> getAll(){
-        return photoService.findAllPhotos();
+        return photoService.findAllPhotoList();
     }
 
     //사진 이름으로 조회
@@ -40,20 +35,24 @@ public class PhotoApiController {
     //사진 경로로 조회
     @GetMapping(params = {"path"})
     public List<PhotoDto> getByPath(@RequestParam Long path){
-        return photoService.findPhotosByPath(path);
+        return photoService.findPhotoListByPath(path);
     }
 
-    //사진 날짜로 조회
-    @GetMapping(params = {"start","end"})
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
-    public List<PhotoDto> getByDate(@RequestParam(name="start") LocalDateTime startDate,
-                                    @RequestParam(name="end") LocalDateTime endDate){
-        return photoService.findPhotosByDate(startDate,endDate);
+//    //사진 날짜로 조회
+//    @GetMapping(params = {"start","end"})
+//    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+//    public List<PhotoDto> getByDateEnd(@RequestParam(name="end") LocalDateTime endDate){
+//        return photoService.findPhotosByDateEnd(endDate);
+//    }
+
+    //사진 정보 수정
+    @PutMapping("/{photoId}")
+    public Long updatePhoto(@PathVariable Long photoId,
+                             @RequestBody PhotoDto photoDto){
+        photoService.updatePhoto(photoId, photoDto);
+        return photoId;
     }
 
-    //put
-
-    //del
     //사진 삭제
     @DeleteMapping("/{photoId}")
     public Long delete(@PathVariable Long photoId){

@@ -1,14 +1,22 @@
 package com.example.entity;
 
+import com.example.domain.FolderDto;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Entity(name = "folder")
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class FolderEntity extends BaseAuditingEntity {
 
     @Id @GeneratedValue
@@ -20,12 +28,10 @@ public class FolderEntity extends BaseAuditingEntity {
     private String name;
 
     @BatchSize(size = 1000)
-    @OneToMany(mappedBy = "path", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @OneToMany(mappedBy = "path", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<PhotoEntity> photos = new ArrayList<>();
+    @OneToMany(mappedBy = "folder", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<PhotoEntity> photoList = new ArrayList<>();
 
-    public void reName(String name){
-        this.name = name;
+    public void updateFolder(FolderDto folderDto){
+        this.name = folderDto.getName();
     }
-
 }
