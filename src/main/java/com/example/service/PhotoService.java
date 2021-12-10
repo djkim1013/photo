@@ -25,7 +25,7 @@ public class PhotoService {
     public Long createPhoto(PhotoDto photoDto){
         //need null check
         FolderEntity folderEntity = folderRepository.findById(photoDto.getFolder()).get();
-        PhotoEntity photoEntity = PhotoEntity.builder()
+        PhotoEntity photoEntity = PhotoEntity.builder() //dto cunstructor try
                 .name(photoDto.getName())
                 .memo(photoDto.getMemo())
                 .folder(folderEntity)
@@ -37,20 +37,20 @@ public class PhotoService {
     //모든 사진 조회
     public List<PhotoDto> findAllPhotoList(){
         List<PhotoEntity> photoEntityList = photoRepository.findAll();
-        return getPhotoDtoList(photoEntityList);
+        return PhotoDto.getPhotoDtoList(photoEntityList);
     }
 
     //사진 이름으로 조회
     public PhotoDto findPhotoByName(String name){
         PhotoEntity photoEntity = photoRepository.findByName(name);
-        return entityToDto(photoEntity);
+        return PhotoDto.entityToDto(photoEntity);
     }
 
     //사진 경로로 조회
     public List<PhotoDto> findPhotoListByPath(Long folderId){
         //need null check
         List<PhotoEntity> photoEntityList = folderRepository.findById(folderId).get().getPhotoList();
-        return getPhotoDtoList(photoEntityList);
+        return PhotoDto.getPhotoDtoList(photoEntityList);
     }
 
 //    //사진 저장 날짜로 조회
@@ -75,23 +75,4 @@ public class PhotoService {
         photoRepository.deleteById(id);
     }
 
-    //entity 정보값을 가진 dto 생성
-    private PhotoDto entityToDto(PhotoEntity photoEntity){
-        return PhotoDto.builder()
-                .id(photoEntity.getId())
-                .name(photoEntity.getName())
-                .memo(photoEntity.getMemo())
-                .folder(photoEntity.getFolder().getId())
-                .regDate(photoEntity.getRegDate())
-                .build();
-    }
-
-    //entity 리스트의 정보값을 가진 dto 리스트 생성
-    private List<PhotoDto> getPhotoDtoList(List<PhotoEntity> photoEntityList) {
-        List<PhotoDto> photoDtoList = new ArrayList<>();
-        for(PhotoEntity photoEntity : photoEntityList){
-            photoDtoList.add(entityToDto(photoEntity));
-        }
-        return photoDtoList;
-    }
 }

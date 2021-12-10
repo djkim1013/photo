@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional(readOnly = true) //이때 insert되면?
 @RequiredArgsConstructor    //setter 지양 -> 생성자 사용 ... bean에 추가가능한 타입의 final 필드 변수는 자동으로 의존성이 주입된다.)
 public class FolderService {
 
@@ -31,13 +31,13 @@ public class FolderService {
     //모든 폴더 조회
     public List<FolderDto> findAllFolderList(){
         List<FolderEntity> folderEntityList = folderRepository.findAll();
-        return entityListToDtoList(folderEntityList);
+        return FolderDto.entityListToDtoList(folderEntityList);
     }
 
     //폴더 조건으로 조회
     public FolderDto findFolderByName(String name){
         FolderEntity folderEntity = folderRepository.findByName(name);
-        return entityToDto(folderEntity);
+        return FolderDto.entityToDto(folderEntity);
     }
 
     //폴더 이름 변경
@@ -54,21 +54,4 @@ public class FolderService {
         folderRepository.deleteById(id);
     }
 
-    //entity 정보값을 가진 dto 생성
-    private FolderDto entityToDto(FolderEntity folderEntity){
-        return FolderDto.builder()
-                .id(folderEntity.getId())
-                .regDate(folderEntity.getRegDate())
-                .name(folderEntity.getName())
-                .build();
-    }
-
-    //entity 리스트의 정보값을 가진 dto 리스트 생성
-    private List<FolderDto> entityListToDtoList(List<FolderEntity> folderEntityList){
-        List<FolderDto> folderDtoList = new ArrayList<>();
-        for(FolderEntity folderEntity : folderEntityList){
-            folderDtoList.add(entityToDto(folderEntity));
-        }
-        return folderDtoList;
-    }
 }
