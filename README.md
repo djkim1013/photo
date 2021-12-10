@@ -2,7 +2,8 @@
 
 ## 사양
 
-- SpringBoot, Spring JPA, H2 DataBase
+- SpringBoot 2.6.1
+- H2 DataBase 1.4.200
 
 ## API
 
