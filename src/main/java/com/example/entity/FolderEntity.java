@@ -27,7 +27,7 @@ public class FolderEntity extends BaseAuditingEntity {
             unique = true)
     private String name;
 
-    @BatchSize(size = 1000)
+    @BatchSize(size = 100)
     @OneToMany(mappedBy = "folder", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<PhotoEntity> photoList = new ArrayList<>();
 
