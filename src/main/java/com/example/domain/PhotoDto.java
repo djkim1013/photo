@@ -1,13 +1,12 @@
 package com.example.domain;
 
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Getter
-@Setter
+@Builder
 public class PhotoDto {
 
     private Long id;
@@ -18,5 +17,5 @@ public class PhotoDto {
 
     private LocalDateTime regDate;
 
-    private Long path;
+    private Long folder;
 }
