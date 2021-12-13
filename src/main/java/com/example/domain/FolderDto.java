@@ -3,7 +3,6 @@ package com.example.domain;
 import com.example.entity.FolderEntity;
 import lombok.*;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;

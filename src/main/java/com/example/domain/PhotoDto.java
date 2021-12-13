@@ -5,7 +5,6 @@ import com.example.entity.PhotoEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
