@@ -8,9 +8,6 @@ import javax.persistence.*;
 
 @Entity(name = "photo")
 @Getter
-//@NoArgsConstructor
-//@AllArgsConstructor
-//@Builder
 public class PhotoEntity extends BaseAuditingEntity {
 
     @Id @GeneratedValue

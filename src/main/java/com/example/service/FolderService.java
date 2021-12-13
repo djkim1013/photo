@@ -8,23 +8,22 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
-@Transactional(readOnly = true) //이때 insert되면?
-@RequiredArgsConstructor    //setter 지양 -> 생성자 사용 ... bean에 추가가능한 타입의 final 필드 변수는 자동으로 의존성이 주입된다.)
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class FolderService {
 
-    private final FolderRepository folderRepository;    //컴파일 시점에서 생성됨을 보장받기 위해 final 선언
+    private final FolderRepository folderRepository;
     
     //폴더 생성
     @Transactional
     public Long createFolder(FolderDto folderDTO){
-        FolderEntity folderEntity = FolderEntity.builder()
-                .name(folderDTO.getName())
-                .build();
-        FolderEntity folderEntityCreated = folderRepository.save(folderEntity);
+        //이름 유효 검사
+        if(folderRepository.findByName(folderDTO.getName())!=null) return -1L;
+        FolderEntity folderEntityCreated = folderRepository.save(FolderEntity.newEntity(folderDTO.getName()));
         return folderEntityCreated.getId();
     }
 
@@ -43,14 +42,17 @@ public class FolderService {
     //폴더 이름 변경
     @Transactional
     public void updateFolder(Long id, FolderDto folderDto){
-        //need null check
-        FolderEntity folder = folderRepository.findById(id).get();
-        folder.updateFolder(folderDto);
+        //id 유효 검사
+        Optional<FolderEntity> folderEntity = folderRepository.findById(id);
+        if(!folderEntity.isPresent()) return;
+        folderEntity.get().updateFolder(folderDto);
     }
 
     //폴더 삭제
     @Transactional
     public void deleteFolder(Long id){
+        Optional<FolderEntity> folderEntity = folderRepository.findById(id);
+        if(!folderEntity.isPresent()) return;
         folderRepository.deleteById(id);
     }
 

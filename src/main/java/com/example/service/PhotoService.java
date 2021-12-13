@@ -47,22 +47,22 @@ public class PhotoService {
     //모든 사진 조회
     public List<PhotoDto> findAll(){
         List<PhotoEntity> photoEntityList = photoRepository.findAll();
-        return PhotoDto.getDtoList(photoEntityList);
+        return PhotoDto.entityListToDtoList(photoEntityList);
     }
 
     //사진 이름으로 조회
     public PhotoDto findByName(String name){
         PhotoEntity photoEntity = photoRepository.findByName(name);
-        return PhotoDto.responseDtoFull(photoEntity);
+        return PhotoDto.entityToDto(photoEntity);
     }
 
     //사진 경로로 조회
     public List<PhotoDto> findPhotoListByPath(Long folderId){
         //need null check
         Optional<FolderEntity> folderEntity = folderRepository.findById(folderId);
-        if(!folderEntity.isPresent()) return new ArrayList<>();
+        if(!folderEntity.isPresent()) return null;
         List<PhotoEntity> photoEntityList = folderEntity.get().getPhotoList();
-        return PhotoDto.getDtoList(photoEntityList);
+        return PhotoDto.entityListToDtoList(photoEntityList);
     }
 
 //    //사진 저장 날짜로 조회
@@ -73,18 +73,16 @@ public class PhotoService {
 
     //사진 정보 수정
     @Transactional
-    public PhotoDto updatePhoto(Long id, PhotoDto photoDto){
+    public void updatePhoto(Long id, PhotoDto photoDto){
         //ID 유효 검사
         Optional<PhotoEntity> photoEntity = photoRepository.findById(id);
-        if(!photoEntity.isPresent()) return PhotoDto.builder().build();
+        if(!photoEntity.isPresent()) return;
 
         //폴더 유효 검사
         Optional<FolderEntity> folderEntity = folderRepository.findById(photoDto.getFolder());
-        if(!folderEntity.isPresent()) return PhotoDto.builder().build();
+        if(!folderEntity.isPresent()) return;
 
         photoEntity.get().updatePhoto(photoDto,folderEntity.get());
-
-        return photoDto;
     }
 
     //사진 삭제
@@ -92,7 +90,7 @@ public class PhotoService {
     public void deletePhoto(Long id){
         //ID 유효 검사
         Optional<PhotoEntity> photoEntity = photoRepository.findById(id);
-        if(!photoEntity.isPresent()) return PhotoDto.builder().build();
+        if(!photoEntity.isPresent()) return;
 
         photoRepository.deleteById(id);
     }

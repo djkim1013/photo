@@ -31,6 +31,12 @@ public class FolderEntity extends BaseAuditingEntity {
     @OneToMany(mappedBy = "folder", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<PhotoEntity> photoList = new ArrayList<>();
 
+    public static FolderEntity newEntity(String name){
+        FolderEntity folderEntity = new FolderEntity();
+        folderEntity.name = name;
+        return folderEntity;
+    }
+
     public void updateFolder(FolderDto folderDto){
         this.name = folderDto.getName();
     }
