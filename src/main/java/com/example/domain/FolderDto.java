@@ -16,6 +16,7 @@ public class FolderDto{
     private LocalDateTime regDate;
     private List<PhotoDto> photoDtoList;
 
+    @Getter
     public class WoPhotoList{
         private Long id = FolderDto.this.id;
         private String name = FolderDto.this.name;
@@ -32,7 +33,14 @@ public class FolderDto{
         );
     }
 
-    //entity를 photo-list를 제외하고 dto로 변환
+    //entity 리스트를 dto 리스트로 변환
+//    public static List<FolderDto> entityListToDtoList(List<FolderEntity> folderEntityList){
+//        return folderEntityList.stream()
+//                .map(FolderDto::entityToDto)
+//                .collect(Collectors.toList());
+//    }
+
+    //entity를 photo-list를 제외한 dto로 변환
     public static FolderDto.WoPhotoList entityToDtoWoPhotoList(FolderEntity folderEntity){
         return new FolderDto(
                 folderEntity.getId(),
@@ -42,14 +50,7 @@ public class FolderDto{
                 .new WoPhotoList();
     }
 
-    //entity 리스트를 dto 리스트로 변환
-    public static List<FolderDto> entityListToDtoList(List<FolderEntity> folderEntityList){
-        return folderEntityList.stream()
-                .map(FolderDto::entityToDto)
-                .collect(Collectors.toList());
-    }
-
-    //entity 리스트를 photo-list를 제외하고 dto 리스트로 변환
+    //entity 리스트를 photo-list를 제외한 dto 리스트로 변환
     public static List<FolderDto.WoPhotoList> entityListToDtoListWoPhotoList(List<FolderEntity> folderEntityList){
         return folderEntityList.stream()
                 .map(FolderDto::entityToDtoWoPhotoList)
