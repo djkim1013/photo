@@ -73,17 +73,27 @@ public class PhotoService {
 
     //사진 정보 수정
     @Transactional
-    public void updatePhoto(Long id, PhotoDto photoDto){
-        //need null check
-        FolderEntity folderEntity = folderRepository.findById(photoDto.getFolder()).get();
-        //need null check
-        photoRepository.findById(id).get().updatePhoto(photoDto,folderEntity);
+    public PhotoDto updatePhoto(Long id, PhotoDto photoDto){
+        //ID 유효 검사
+        Optional<PhotoEntity> photoEntity = photoRepository.findById(id);
+        if(!photoEntity.isPresent()) return PhotoDto.builder().build();
 
+        //폴더 유효 검사
+        Optional<FolderEntity> folderEntity = folderRepository.findById(photoDto.getFolder());
+        if(!folderEntity.isPresent()) return PhotoDto.builder().build();
+
+        photoEntity.get().updatePhoto(photoDto,folderEntity.get());
+
+        return photoDto;
     }
 
     //사진 삭제
     @Transactional
     public void deletePhoto(Long id){
+        //ID 유효 검사
+        Optional<PhotoEntity> photoEntity = photoRepository.findById(id);
+        if(!photoEntity.isPresent()) return PhotoDto.builder().build();
+
         photoRepository.deleteById(id);
     }
 
