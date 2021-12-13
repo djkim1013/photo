@@ -28,9 +28,9 @@ public class FolderService {
     }
 
     //모든 폴더 조회
-    public List<FolderDto> findAllFolderList(){
+    public List<FolderDto.WoPhotoList> findAllFolderList(){
         List<FolderEntity> folderEntityList = folderRepository.findAll();
-        return FolderDto.entityListToDtoList(folderEntityList);
+        return FolderDto.entityListToDtoListWoPhotoList(folderEntityList);
     }
 
     //폴더 조건으로 조회

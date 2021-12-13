@@ -22,7 +22,7 @@ public class FolderApiController {
 
     //폴더 모두 조회
     @GetMapping
-    public List<FolderDto> getAllFolderList(){
+    public List<FolderDto.WoPhotoList> getAllFolderList(){
         return folderService.findAllFolderList();
     }
 
