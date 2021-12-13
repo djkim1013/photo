@@ -11,19 +11,19 @@ import java.util.List;
 @Getter
 @Setter
 //@Builder
-public class PhotoDto extends Dto{
-//    private Long id;
-//
-//    private String name;
-//
-//    private LocalDateTime regDate;
+public class PhotoDto{
+    private Long id;
+
+    private String name;
+
+    private LocalDateTime regDate;
 
     private String memo;
 
     private Long folder;
 
     //entity 정보값을 가진 dto 생성
-    public static PhotoDto entityToDto(PhotoEntity photoEntity){
+    public static PhotoDto photoDtoRequest(PhotoEntity photoEntity){
         PhotoDto photoDto = new PhotoDto();
         photoDto.id = photoEntity.getId();
         photoDto.name = photoEntity.getName();
@@ -41,13 +41,30 @@ public class PhotoDto extends Dto{
 //                .build();
     }
 
-    public
+    public static PhotoDto photoDtoResponseSummary(PhotoEntity photoEntity) {
+        PhotoDto photoDto = new PhotoDto();
+        photoDto.id = photoEntity.getId();
+        photoDto.name = photoEntity.getName();
+        photoDto.regDate = photoEntity.getRegDate();
+        photoDto.memo = photoEntity.getMemo();
+        return photoDto;
+    }
+
+    public static PhotoDto photoDtoResponseFull(PhotoEntity photoEntity) {
+        PhotoDto photoDto = new PhotoDto();
+        photoDto.id = photoEntity.getId();
+        photoDto.name = photoEntity.getName();
+        photoDto.regDate = photoEntity.getRegDate();
+        photoDto.memo = photoEntity.getMemo();
+        photoDto.folder = photoEntity.getFolder().getId();
+        return photoDto;
+    }
 
     //entity 리스트의 정보값을 가진 dto 리스트 생성
     public static List<PhotoDto> getPhotoDtoList(List<PhotoEntity> photoEntityList) {
         List<PhotoDto> photoDtoList = new ArrayList<>();
         for(PhotoEntity photoEntity : photoEntityList){
-            photoDtoList.add(PhotoDto.entityToDto(photoEntity));
+            photoDtoList.add(PhotoDto.photoDtoResponseSummary(photoEntity));
         }
         return photoDtoList;
     }

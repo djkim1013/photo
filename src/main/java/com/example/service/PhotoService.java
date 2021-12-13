@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,7 +46,7 @@ public class PhotoService {
     //사진 이름으로 조회
     public PhotoDto findPhotoByName(String name){
         PhotoEntity photoEntity = photoRepository.findByName(name);
-        return PhotoDto.entityToDto(photoEntity);
+        return PhotoDto.photoDtoRequest(photoEntity);
     }
 
     //사진 경로로 조회
