@@ -24,12 +24,13 @@ public class PhotoService {
     @Transactional
     public Long createPhoto(PhotoDto photoDto){
         //need null check
-        FolderEntity folderEntity = folderRepository.findById(photoDto.getFolder()).get();
-        PhotoEntity photoEntity = PhotoEntity.builder() //dto cunstructor try
-                .name(photoDto.getName())
-                .memo(photoDto.getMemo())
-                .folder(folderEntity)
-                .build();
+//        FolderEntity folderEntity = folderRepository.findById(photoDto.getFolder()).get();
+//        PhotoEntity photoEntity = PhotoEntity.builder() //dto cunstructor try
+//                .name(photoDto.getName())
+//                .memo(photoDto.getMemo())
+//                .folder(folderEntity)
+//                .build();
+        PhotoEntity photoEntity = new PhotoEntity().newEntity(photoDto);
         PhotoEntity photoEntityCreated = photoRepository.save(photoEntity);
         return photoEntityCreated.getId();
     }
@@ -43,7 +44,7 @@ public class PhotoService {
     //사진 이름으로 조회
     public PhotoDto findPhotoByName(String name){
         PhotoEntity photoEntity = photoRepository.findByName(name);
-        return PhotoDto.entityToDto(photoEntity);
+        return new PhotoDto().entityToDto(photoEntity);
     }
 
     //사진 경로로 조회

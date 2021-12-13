@@ -35,13 +35,3 @@ public class FolderEntity extends BaseAuditingEntity {
         this.name = folderDto.getName();
     }
 }
-
-//hikari - 내장
-//jpa 다른 것들
-//ddd와 계층 차이
-//logging - 운영
-//      -설계 통일 / 구체적 이슈 정보 출력 / 동작 의도 / key 값 설정 ... 추적 가능하도록
-// properties.yml <-> setting.gradle
-// kuber + kafka
-
-//과제/수행 내용 정리

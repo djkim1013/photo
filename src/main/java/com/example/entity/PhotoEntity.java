@@ -1,6 +1,7 @@
 package com.example.entity;
 
 import com.example.domain.PhotoDto;
+import com.example.repository.FolderRepository;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,6 +31,13 @@ public class PhotoEntity extends BaseAuditingEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "folder_id")
     private FolderEntity folder;
+
+    public PhotoEntity newEntity(PhotoDto photoDto){
+        this.name = photoDto.getName();
+        this.memo = photoDto.getMemo();
+        this.folder =
+        return this;
+    }
 
     public void updatePhoto(PhotoDto photoDto,FolderEntity folder){
         this.name = photoDto.getName();
