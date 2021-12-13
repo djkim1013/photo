@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 @Getter
 @AllArgsConstructor
-public class PhotoDto implements Serializable {
+public class PhotoDto{
     private Long id;
     private String name;
     private LocalDateTime regDate;

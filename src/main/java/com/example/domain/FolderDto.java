@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 @Getter
 @AllArgsConstructor
-public class FolderDto implements Serializable {
+public class FolderDto{
 
     private Long id;
     private String name;
