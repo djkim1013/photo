@@ -17,19 +17,21 @@ public class PhotoApiController {
     //사진 저장
     @PostMapping
     public Long create(@RequestBody PhotoDto photo){
-        return photoService.createPhoto(photo);
+        //생성 실패 시 응답
+        return photoService.create(photo);
     }
 
     //사진 모두 조회
     @GetMapping
     public List<PhotoDto> getAll(){
-        return photoService.findAllPhotoList();
+        //조회된 결과 없음
+        return photoService.findAll();
     }
 
     //사진 이름으로 조회
     @GetMapping(params = {"name"})
     public PhotoDto getByName(@RequestParam(name = "name") String photoName){
-        return photoService.findPhotoByName(photoName);
+        return photoService.findByName(photoName);
     }
 
     //사진 경로로 조회

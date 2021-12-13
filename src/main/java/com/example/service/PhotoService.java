@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,38 +23,46 @@ public class PhotoService {
 
     //사진 저장
     @Transactional
-    public Long createPhoto(PhotoDto photoDto){
+    public Long create(PhotoDto photoDto){
+        //이름 유효 체크
+        if(photoRepository.findByName(photoDto.getName()) != null)
+            return -1L;
+        //폴더 유효 체크
         Optional<FolderEntity> folderEntity = folderRepository.findById(photoDto.getFolder());
-        if(!folderEntity.isPresent()) return -1L;
-        //need null check
+        if(!folderEntity.isPresent())
+            return -1L;
+
 //        FolderEntity folderEntity = folderRepository.findById(photoDto.getFolder()).get();
 //        PhotoEntity photoEntity = PhotoEntity.builder() //dto cunstructor try
 //                .name(photoDto.getName())
 //                .memo(photoDto.getMemo())
 //                .folder(folderEntity)
 //                .build();
+
         PhotoEntity photoEntity = PhotoEntity.newEntity(photoDto,folderEntity.get());
         PhotoEntity photoEntityCreated = photoRepository.save(photoEntity);
         return photoEntityCreated.getId();
     }
 
     //모든 사진 조회
-    public List<PhotoDto> findAllPhotoList(){
+    public List<PhotoDto> findAll(){
         List<PhotoEntity> photoEntityList = photoRepository.findAll();
-        return PhotoDto.getPhotoDtoList(photoEntityList);
+        return PhotoDto.getDtoList(photoEntityList);
     }
 
     //사진 이름으로 조회
-    public PhotoDto findPhotoByName(String name){
+    public PhotoDto findByName(String name){
         PhotoEntity photoEntity = photoRepository.findByName(name);
-        return PhotoDto.photoDtoRequest(photoEntity);
+        return PhotoDto.responseDtoFull(photoEntity);
     }
 
     //사진 경로로 조회
     public List<PhotoDto> findPhotoListByPath(Long folderId){
         //need null check
-        List<PhotoEntity> photoEntityList = folderRepository.findById(folderId).get().getPhotoList();
-        return PhotoDto.getPhotoDtoList(photoEntityList);
+        Optional<FolderEntity> folderEntity = folderRepository.findById(folderId);
+        if(!folderEntity.isPresent()) return new ArrayList<>();
+        List<PhotoEntity> photoEntityList = folderEntity.get().getPhotoList();
+        return PhotoDto.getDtoList(photoEntityList);
     }
 
 //    //사진 저장 날짜로 조회

@@ -21,15 +21,15 @@ public class FolderDto {
 
     //entity 정보값을 가진 dto 생성
     public static FolderDto entityToDto(FolderEntity folderEntity){
-        return FolderDto.builder()
-                .id(folderEntity.getId())
-                .regDate(folderEntity.getRegDate())
-                .name(folderEntity.getName())
-
-                //폴더 정보 조회 시 사진 목록 포함여부
-//                .photoDtoList(PhotoDto.getPhotoDtoList(folderEntity.getPhotoList()))
-
-                .build();
+//        return FolderDto.builder()
+//                .id(folderEntity.getId())
+//                .regDate(folderEntity.getRegDate())
+//                .name(folderEntity.getName())
+//
+//                //폴더 정보 조회 시 사진 목록 포함여부
+////                .photoDtoList(PhotoDto.getPhotoDtoList(folderEntity.getPhotoList()))
+//
+//                .build();
     }
 
     //entity 리스트의 정보값을 가진 dto 리스트 생성

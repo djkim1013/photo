@@ -16,7 +16,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+//@Builder
 public class FolderEntity extends BaseAuditingEntity {
 
     @Id @GeneratedValue //전략 default - auto

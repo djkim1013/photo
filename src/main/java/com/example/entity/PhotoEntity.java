@@ -1,20 +1,16 @@
 package com.example.entity;
 
 import com.example.domain.PhotoDto;
-import com.example.repository.FolderRepository;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 
 @Entity(name = "photo")
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+//@NoArgsConstructor
+//@AllArgsConstructor
+//@Builder
 public class PhotoEntity extends BaseAuditingEntity {
 
     @Id @GeneratedValue
@@ -41,11 +37,8 @@ public class PhotoEntity extends BaseAuditingEntity {
     }
 
     public void updatePhoto(PhotoDto photoDto, FolderEntity folder){
-        if(photoDto.getName() != null
-                && !photoDto.getName().isEmpty())
-            this.name = photoDto.getName();
-        if(photoDto.getMemo() != null)
-            this.memo = photoDto.getMemo();
+        this.name = photoDto.getName();
+        this.memo = photoDto.getMemo();
         this.folder = folder;
     }
 
