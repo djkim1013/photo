@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -23,6 +24,8 @@ public class PhotoService {
     //사진 저장
     @Transactional
     public Long createPhoto(PhotoDto photoDto){
+        Optional<FolderEntity> folderEntity = folderRepository.findById(photoDto.getFolder());
+        if(!folderEntity.isPresent()) return -1L;
         //need null check
 //        FolderEntity folderEntity = folderRepository.findById(photoDto.getFolder()).get();
 //        PhotoEntity photoEntity = PhotoEntity.builder() //dto cunstructor try
@@ -30,7 +33,7 @@ public class PhotoService {
 //                .memo(photoDto.getMemo())
 //                .folder(folderEntity)
 //                .build();
-        PhotoEntity photoEntity = new PhotoEntity().newEntity(photoDto);
+        PhotoEntity photoEntity = PhotoEntity.newEntity(photoDto,folderEntity.get());
         PhotoEntity photoEntityCreated = photoRepository.save(photoEntity);
         return photoEntityCreated.getId();
     }
@@ -44,7 +47,7 @@ public class PhotoService {
     //사진 이름으로 조회
     public PhotoDto findPhotoByName(String name){
         PhotoEntity photoEntity = photoRepository.findByName(name);
-        return new PhotoDto().entityToDto(photoEntity);
+        return PhotoDto.entityToDto(photoEntity);
     }
 
     //사진 경로로 조회

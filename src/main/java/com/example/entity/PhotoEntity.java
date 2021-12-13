@@ -32,16 +32,20 @@ public class PhotoEntity extends BaseAuditingEntity {
     @JoinColumn(name = "folder_id")
     private FolderEntity folder;
 
-    public PhotoEntity newEntity(PhotoDto photoDto){
-        this.name = photoDto.getName();
-        this.memo = photoDto.getMemo();
-        this.folder =
-        return this;
+    public static PhotoEntity newEntity(PhotoDto photoDto, FolderEntity folder){
+        PhotoEntity photoEntity = new PhotoEntity();
+        photoEntity.name = photoDto.getName();
+        photoEntity.memo = photoDto.getMemo();
+        photoEntity.folder = folder;
+        return photoEntity;
     }
 
-    public void updatePhoto(PhotoDto photoDto,FolderEntity folder){
-        this.name = photoDto.getName();
-        this.memo = photoDto.getMemo();
+    public void updatePhoto(PhotoDto photoDto, FolderEntity folder){
+        if(photoDto.getName() != null
+                && !photoDto.getName().isEmpty())
+            this.name = photoDto.getName();
+        if(photoDto.getMemo() != null)
+            this.memo = photoDto.getMemo();
         this.folder = folder;
     }
 
