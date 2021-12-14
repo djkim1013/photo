@@ -76,9 +76,9 @@ public class FolderApiController {
     }
 
     //폴더 삭제
-    @DeleteMapping("/{bookId}")
-    public Long deleteFolder(@PathVariable Long bookId){
-        folderService.deleteFolder(bookId);
-        return bookId;
+    @DeleteMapping("/{folderId}")
+    public Long deleteFolder(@PathVariable Long folderId){
+        folderService.deleteFolder(folderId);
+        return folderId;
     }
 }

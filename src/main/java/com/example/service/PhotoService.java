@@ -63,10 +63,7 @@ public class PhotoService {
     //사진 삭제
     @Transactional
     public void deletePhoto(Long id){
-        //ID 유효 검사
-        Optional<PhotoEntity> photoEntity = photoRepository.findById(id);
-        if(!photoEntity.isPresent()) return;
-
+        photoRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         photoRepository.deleteById(id);
     }
 

@@ -44,6 +44,7 @@ public class FolderService {
     //폴더 삭제
     @Transactional
     public void deleteFolder(Long id){
+        folderRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         folderRepository.deleteById(id);
     }
 
