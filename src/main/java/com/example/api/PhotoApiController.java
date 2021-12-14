@@ -18,70 +18,41 @@ public class PhotoApiController {
 
     //사진 저장
     @PostMapping
-    public Long createPhoto(@RequestBody PhotoDto.Request requestCreate){
+    public Long createPhoto(@RequestBody PhotoDto requestCreate){
         return photoService.createPhoto(requestCreate).getId();
     }
 
     //사진 모두 조회
     @GetMapping
-    public List<PhotoDto.ResponseGet> getAllPhotos(){
+    public List<PhotoDto> getAllPhotos(){
         return photoService.findAllPhotos().stream()
-                .map(e -> new PhotoDto().new ResponseGet(
-                        e.getId(),
-                        e.getName(),
-                        e.getRegDate(),
-                        e.getMemo(),
-                        e.getFolder().getId()
-                ))
+                .map(PhotoDto::newResponse)
                 .collect(Collectors.toList());
     }
 
     //사진 이름으로 조회
     @GetMapping(params = {"name"})
-    public PhotoDto.ResponseGet getPhotoByName(@RequestParam String name){
+    public PhotoDto getPhotoByName(@RequestParam String name){
         PhotoEntity photoByName = photoService.findPhotoByName(name);
-        return new PhotoDto().new ResponseGet(
-                photoByName.getId(),
-                photoByName.getName(),
-                photoByName.getRegDate(),
-                photoByName.getMemo(),
-                photoByName.getFolder().getId()
-        );
+        return PhotoDto.newResponse(photoByName);
     }
 
     //사진 경로로 조회
     @GetMapping(params = {"folderId"})
-    public List<PhotoDto.ResponseGet> getPhotoByFolder(@RequestParam Long folderId){
+    public List<PhotoDto> getPhotoByFolder(@RequestParam Long folderId){
         return photoService.findPhotosInFolder(folderId).stream()
-                .map(e -> new PhotoDto().new ResponseGet(
-                        e.getId(),
-                        e.getName(),
-                        e.getRegDate(),
-                        e.getMemo(),
-                        e.getFolder().getId()
-                ))
+                .map(PhotoDto::newResponse)
                 .collect(Collectors.toList());
     }
 
-//    //사진 날짜로 조회
-//    @GetMapping(params = {"start","end"})
-//    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
-//    public List<PhotoDto> getByDateEnd(@RequestParam(name="end") LocalDateTime endDate){
-//        return photoService.findPhotosByDateEnd(endDate);
-//    }
+    //사진 날짜로 조회
 
     //사진 정보 수정
     @PutMapping("/{photoId}")
-    public PhotoDto.ResponseGet updatePhoto(@PathVariable Long photoId,
-                                            @RequestBody PhotoDto.Request requestUpdate){
+    public PhotoDto updatePhoto(@PathVariable Long photoId,
+                                         @RequestBody PhotoDto requestUpdate){
         PhotoEntity photoUpdated = photoService.updatePhoto(photoId, requestUpdate);
-        return new PhotoDto().new ResponseGet(
-                photoUpdated.getId(),
-                photoUpdated.getName(),
-                photoUpdated.getRegDate(),
-                photoUpdated.getMemo(),
-                photoUpdated.getFolder().getId()
-        );
+        return PhotoDto.newResponse(photoUpdated);
     }
 
     //사진 삭제

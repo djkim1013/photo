@@ -22,7 +22,7 @@ public class PhotoService {
 
     //사진 저장
     @Transactional
-    public PhotoEntity createPhoto(PhotoDto.Request requestCreate){
+    public PhotoEntity createPhoto(PhotoDto requestCreate){
         PhotoEntity photoEntity = new PhotoEntity(
                 requestCreate.getName(),
                 requestCreate.getMemo(),
@@ -50,7 +50,7 @@ public class PhotoService {
 
     //사진 정보 수정
     @Transactional
-    public PhotoEntity updatePhoto(Long id, PhotoDto.Request requestUpdate){
+    public PhotoEntity updatePhoto(Long id, PhotoDto requestUpdate){
         PhotoEntity photoEntity = photoRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         photoEntity.updatePhoto(
                 requestUpdate.getName(),

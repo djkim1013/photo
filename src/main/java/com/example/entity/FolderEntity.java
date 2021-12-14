@@ -1,6 +1,5 @@
 package com.example.entity;
 
-import com.example.domain.FolderDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.BatchSize;
