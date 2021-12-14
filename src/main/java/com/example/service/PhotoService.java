@@ -21,13 +21,15 @@ public class PhotoService {
     //사진 저장
     @Transactional
     public Photo createPhoto(PhotoDto requestCreate){
+        //이름 중복 체크
         if(photoRepository.findByName(requestCreate.getName())!=null) throw new IllegalArgumentException();
-        Photo photoEntity = new Photo(
+
+        Photo photoCreate = new Photo(
                 requestCreate.getName(),
                 requestCreate.getMemo(),
                 folderRepository.findById(requestCreate.getFolder()).orElseThrow(IllegalArgumentException::new)
         );
-        return photoRepository.save(photoEntity);
+        return photoRepository.save(photoCreate);
     }
 
     //모든 사진 조회
@@ -50,15 +52,18 @@ public class PhotoService {
     //사진 정보 수정
     @Transactional
     public Photo updatePhoto(Long id, PhotoDto requestUpdate){
-        Photo photoEntity = photoRepository.findById(id).orElseThrow(IllegalArgumentException::new);
-        if(photoRepository.findByName(requestUpdate.getName()) != photoEntity)
-            throw new IllegalArgumentException();
-        photoEntity.updatePhoto(
+        Photo photoUpdate = photoRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+
+        //이름 중복 체크
+        Photo photoByName = photoRepository.findByName(requestUpdate.getName());
+        if(photoByName != null && photoByName != photoUpdate) throw new IllegalArgumentException();
+
+        photoUpdate.updatePhoto(
                 requestUpdate.getName(),
                 requestUpdate.getMemo(),
                 folderRepository.findById(requestUpdate.getFolder()).orElseThrow(IllegalArgumentException::new)
         );
-        return photoEntity;
+        return photoUpdate;
     }
 
     //사진 삭제

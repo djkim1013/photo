@@ -37,10 +37,14 @@ public class FolderService {
     //폴더 이름 변경
     @Transactional
     public Folder updateFolder(Long id, String name){
-        Folder folderEntity = folderRepository.findById(id).orElseThrow(NoSuchElementException::new);
-        if(folderRepository.findByName(name) != folderEntity) throw new IllegalArgumentException();
-        folderEntity.updateFolder(name);
-        return folderEntity;
+        Folder folderUpdate = folderRepository.findById(id).orElseThrow(NoSuchElementException::new);
+
+        //이름 중복 체크
+        Folder folderByName = folderRepository.findByName(name);
+        if(folderByName != null && folderByName != folderUpdate) throw new IllegalArgumentException();
+
+        folderUpdate.updateFolder(name);
+        return folderUpdate;
     }
 
     //폴더 삭제
