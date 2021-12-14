@@ -1,59 +1,34 @@
 package com.example.domain;
 
-import com.example.entity.FolderEntity;
 import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
-@Getter
-@AllArgsConstructor
 public class FolderDto{
 
-    private Long id;
-    private String name;
-    private LocalDateTime regDate;
-    private List<PhotoDto> photoDtoList;
+    @Getter
+    @AllArgsConstructor
+    public class Request {
+        private String name;
+    }
 
     @Getter
-    public class WoPhotoList{
-        private Long id = FolderDto.this.id;
-        private String name = FolderDto.this.name;
-        private LocalDateTime regDate = FolderDto.this.regDate;
+    @AllArgsConstructor
+    public class ResponseGetOne {
+        private Long id;
+        private String name;
+        private LocalDateTime regDate;
+        private List<PhotoDto> photoList;
     }
 
-    //entity를 dto로 변환
-    public static FolderDto entityToDto(FolderEntity folderEntity){
-        return new FolderDto(
-                folderEntity.getId(),
-                folderEntity.getName(),
-                folderEntity.getRegDate(),
-                PhotoDto.entityListToDtoList(folderEntity.getPhotoList())
-        );
+    @Getter
+    @AllArgsConstructor
+    public class ResponseGetAll{
+        private Long id;
+        private String name;
+        private LocalDateTime regDate;
+        private Integer numberOfPhotos;
     }
 
-    //entity 리스트를 dto 리스트로 변환
-//    public static List<FolderDto> entityListToDtoList(List<FolderEntity> folderEntityList){
-//        return folderEntityList.stream()
-//                .map(FolderDto::entityToDto)
-//                .collect(Collectors.toList());
-//    }
-
-    //entity를 photo-list를 제외한 dto로 변환
-    public static FolderDto.WoPhotoList entityToDtoWoPhotoList(FolderEntity folderEntity){
-        return new FolderDto(
-                folderEntity.getId(),
-                folderEntity.getName(),
-                folderEntity.getRegDate(),
-                null)
-                .new WoPhotoList();
-    }
-
-    //entity 리스트를 photo-list를 제외한 dto 리스트로 변환
-    public static List<FolderDto.WoPhotoList> entityListToDtoListWoPhotoList(List<FolderEntity> folderEntityList){
-        return folderEntityList.stream()
-                .map(FolderDto::entityToDtoWoPhotoList)
-                .collect(Collectors.toList());
-    }
 }

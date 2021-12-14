@@ -16,14 +16,14 @@ public class FolderApiController {
 
     //폴더 생성
     @PostMapping
-    public Long createFolder(@RequestBody FolderDto folder){
-        return folderService.createFolder(folder);
+    public Long createFolder(@RequestBody FolderDto.Request requestCreate){
+        return folderService.createFolder(requestCreate.getName());
     }
 
     //폴더 모두 조회
     @GetMapping
-    public List<FolderDto.WoPhotoList> getAllFolderList(){
-        return folderService.findAllFolderList();
+    public List<FolderDto.ResponseGetAll> getAllFolderList(){
+        return folderService.findAllFolder();
     }
 
     //폴더 이름으로 조회

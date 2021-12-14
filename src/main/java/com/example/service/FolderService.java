@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -20,40 +21,34 @@ public class FolderService {
     
     //폴더 생성
     @Transactional
-    public Long createFolder(FolderDto folderDTO){
-        //이름 유효 검사
-        if(folderRepository.findByName(folderDTO.getName())!=null) return -1L;
-        FolderEntity folderEntityCreated = folderRepository.save(FolderEntity.newEntity(folderDTO.getName()));
-        return folderEntityCreated.getId();
+    public FolderEntity createFolder(String name){
+        return folderRepository.save(new FolderEntity(name));
     }
 
     //모든 폴더 조회
-    public List<FolderDto.WoPhotoList> findAllFolderList(){
-        List<FolderEntity> folderEntityList = folderRepository.findAll();
-        return FolderDto.entityListToDtoListWoPhotoList(folderEntityList);
+    public List<FolderEntity> findAllFolder(){
+        return folderRepository.findAll();
     }
 
     //폴더 조건으로 조회
-    public FolderDto findFolderByName(String name){
-        FolderEntity folderEntity = folderRepository.findByName(name);
-        return FolderDto.entityToDto(folderEntity);
+    public FolderEntity findFolderByName(String name){
+        return folderRepository.findByName(name);
     }
 
     //폴더 이름 변경
     @Transactional
-    public void updateFolder(Long id, FolderDto folderDto){
-        //id 유효 검사
-        Optional<FolderEntity> folderEntity = folderRepository.findById(id);
-        if(!folderEntity.isPresent()) return;
-        folderEntity.get().updateFolder(folderDto);
+    public void updateFolder(Long id, String name){
+        FolderEntity folderEntity = folderRepository.findById(id).orElseThrow(NoSuchElementException::new);
+        folderEntity.updateFolder(name);
     }
 
     //폴더 삭제
     @Transactional
     public void deleteFolder(Long id){
-        Optional<FolderEntity> folderEntity = folderRepository.findById(id);
-        if(!folderEntity.isPresent()) return;
+        FolderEntity folderEntity = folderRepository.findById(id).orElseThrow(NoSuchElementException::new);
         folderRepository.deleteById(id);
     }
+
+
 
 }

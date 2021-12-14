@@ -1,8 +1,6 @@
 package com.example.entity;
 
 import com.example.domain.FolderDto;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.BatchSize;
@@ -15,8 +13,6 @@ import java.util.List;
 @Entity(name = "folder")
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
-//@Builder
 public class FolderEntity extends BaseAuditingEntity {
 
     @Id @GeneratedValue //전략 default - auto
@@ -31,13 +27,11 @@ public class FolderEntity extends BaseAuditingEntity {
     @OneToMany(mappedBy = "folder", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<PhotoEntity> photoList = new ArrayList<>();
 
-    public static FolderEntity newEntity(String name){
-        FolderEntity folderEntity = new FolderEntity();
-        folderEntity.name = name;
-        return folderEntity;
+    public FolderEntity(String name){
+        this.name = name;
     }
 
-    public void updateFolder(FolderDto folderDto){
-        this.name = folderDto.getName();
+    public void updateFolder(String name){
+        this.name = name;
     }
 }
