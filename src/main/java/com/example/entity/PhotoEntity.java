@@ -2,12 +2,14 @@ package com.example.entity;
 
 import com.example.domain.PhotoDto;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 
 @Entity(name = "photo")
 @Getter
+@NoArgsConstructor
 public class PhotoEntity extends BaseAuditingEntity {
 
     @Id @GeneratedValue
@@ -25,17 +27,15 @@ public class PhotoEntity extends BaseAuditingEntity {
     @JoinColumn(name = "folder_id")
     private FolderEntity folder;
 
-    public static PhotoEntity newEntity(PhotoDto photoDto, FolderEntity folder){
-        PhotoEntity photoEntity = new PhotoEntity();
-        photoEntity.name = photoDto.getName();
-        photoEntity.memo = photoDto.getMemo();
-        photoEntity.folder = folder;
-        return photoEntity;
+    public PhotoEntity(String name, String memo, FolderEntity folder){
+        this.name = name;
+        this.memo = memo;
+        this.folder = folder;
     }
 
-    public void updatePhoto(PhotoDto photoDto, FolderEntity folder){
-        this.name = photoDto.getName();
-        this.memo = photoDto.getMemo();
+    public void updatePhoto(String name, String memo, FolderEntity folder){
+        this.name = name;
+        this.memo = memo;
         this.folder = folder;
     }
 

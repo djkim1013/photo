@@ -19,7 +19,7 @@ public class FolderDto{
         private Long id;
         private String name;
         private LocalDateTime regDate;
-        private List<PhotoDto> photoList;
+        private List<PhotoDto.ResponseInFolder> photoList;
     }
 
     @Getter
