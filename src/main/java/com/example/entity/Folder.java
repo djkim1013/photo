@@ -1,5 +1,6 @@
 package com.example.entity;
 
+import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.BatchSize;
@@ -18,6 +19,7 @@ public class Folder extends BaseAuditingEntity {
     @Column(name = "folder_id")
     private Long id;
 
+    @NotNull
     @Column(name = "folder_name",
             unique = true)
     private String name;

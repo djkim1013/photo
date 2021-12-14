@@ -18,8 +18,9 @@ public class FolderService {
     private final FolderRepository folderRepository;
     
     //폴더 생성
-//    @Transactional
+    @Transactional
     public Folder createFolder(String name){
+        if(folderRepository.findByName(name) != null) throw new IllegalArgumentException();
         return folderRepository.save(new Folder(name));
     }
 
@@ -37,6 +38,7 @@ public class FolderService {
     @Transactional
     public Folder updateFolder(Long id, String name){
         Folder folderEntity = folderRepository.findById(id).orElseThrow(NoSuchElementException::new);
+        if(folderRepository.findByName(name) != folderEntity) throw new IllegalArgumentException();
         folderEntity.updateFolder(name);
         return folderEntity;
     }

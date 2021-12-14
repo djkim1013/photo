@@ -21,6 +21,7 @@ public class PhotoService {
     //사진 저장
     @Transactional
     public Photo createPhoto(PhotoDto requestCreate){
+        if(photoRepository.findByName(requestCreate.getName())!=null) throw new IllegalArgumentException();
         Photo photoEntity = new Photo(
                 requestCreate.getName(),
                 requestCreate.getMemo(),
@@ -50,6 +51,8 @@ public class PhotoService {
     @Transactional
     public Photo updatePhoto(Long id, PhotoDto requestUpdate){
         Photo photoEntity = photoRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        if(photoRepository.findByName(requestUpdate.getName()) != photoEntity)
+            throw new IllegalArgumentException();
         photoEntity.updatePhoto(
                 requestUpdate.getName(),
                 requestUpdate.getMemo(),

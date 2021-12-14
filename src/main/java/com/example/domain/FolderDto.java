@@ -15,11 +15,19 @@ public class FolderDto{
     private LocalDateTime regDate;
     private List<PhotoDto> photoList;
 
+    @Getter
     public class WoPhotoList{
-        private Long id = FolderDto.this.id;
-        private String name = FolderDto.this.name;
-        private LocalDateTime regDate = FolderDto.this.regDate;
-        private Integer PhotoListLength = FolderDto.this.photoList.size();
+        private Long id;
+        private String name;
+        private LocalDateTime regDate;
+        private Integer photoListLength;
+
+        public WoPhotoList(){
+            id = FolderDto.this.id;
+            name = FolderDto.this.name;
+            regDate = FolderDto.this.regDate;
+            photoListLength = FolderDto.this.photoList.size();
+        }
     }
 
     public static FolderDto newDto(Folder folderEntity){
@@ -31,12 +39,8 @@ public class FolderDto{
     }
 
     public static WoPhotoList newDtoWoPhotoList(Folder folderEntity){
-        return new FolderDto(
-                folderEntity.getId(),
-                folderEntity.getName(),
-                folderEntity.getRegDate(),
-                null)
-                .new WoPhotoList();
+
+        return FolderDto.newDto(folderEntity).new WoPhotoList();
     }
 
 }

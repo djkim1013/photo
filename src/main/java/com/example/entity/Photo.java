@@ -1,5 +1,6 @@
 package com.example.entity;
 
+import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +16,7 @@ public class Photo extends BaseAuditingEntity {
     @Column(name = "photo_id")
     private Long id;
 
+    @NotNull
     @Column(name = "photo_name",
             unique = true)
     private String name;
