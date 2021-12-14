@@ -1,8 +1,7 @@
 package com.example.service;
 
 import com.example.domain.PhotoDto;
-import com.example.entity.FolderEntity;
-import com.example.entity.PhotoEntity;
+import com.example.entity.Photo;
 import com.example.repository.FolderRepository;
 import com.example.repository.PhotoRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -22,8 +20,8 @@ public class PhotoService {
 
     //사진 저장
     @Transactional
-    public PhotoEntity createPhoto(PhotoDto requestCreate){
-        PhotoEntity photoEntity = new PhotoEntity(
+    public Photo createPhoto(PhotoDto requestCreate){
+        Photo photoEntity = new Photo(
                 requestCreate.getName(),
                 requestCreate.getMemo(),
                 folderRepository.findById(requestCreate.getFolder()).orElseThrow(IllegalArgumentException::new)
@@ -32,17 +30,17 @@ public class PhotoService {
     }
 
     //모든 사진 조회
-    public List<PhotoEntity> findAllPhotos(){
+    public List<Photo> findAllPhotos(){
         return photoRepository.findAll();
     }
 
     //사진 이름으로 조회
-    public PhotoEntity findPhotoByName(String name){
+    public Photo findPhotoByName(String name){
         return photoRepository.findByName(name);
     }
 
     //사진 경로로 조회
-    public List<PhotoEntity> findPhotosInFolder(Long folderId){
+    public List<Photo> findPhotosInFolder(Long folderId){
         return folderRepository.findById(folderId).orElseThrow(IllegalArgumentException::new).getPhotoList();
     }
 
@@ -50,8 +48,8 @@ public class PhotoService {
 
     //사진 정보 수정
     @Transactional
-    public PhotoEntity updatePhoto(Long id, PhotoDto requestUpdate){
-        PhotoEntity photoEntity = photoRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+    public Photo updatePhoto(Long id, PhotoDto requestUpdate){
+        Photo photoEntity = photoRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         photoEntity.updatePhoto(
                 requestUpdate.getName(),
                 requestUpdate.getMemo(),

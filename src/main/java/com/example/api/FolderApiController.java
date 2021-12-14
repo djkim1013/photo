@@ -1,8 +1,7 @@
 package com.example.api;
 
 import com.example.domain.FolderDto;
-import com.example.domain.PhotoDto;
-import com.example.entity.FolderEntity;
+import com.example.entity.Folder;
 import com.example.service.FolderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -19,60 +18,30 @@ public class FolderApiController {
 
     //폴더 생성
     @PostMapping
-    public Long createFolder(@RequestBody FolderDto.Request requestCreate){
+    public Long createFolder(@RequestBody FolderDto requestCreate){
         return folderService.createFolder(requestCreate.getName()).getId();
     }
 
     //폴더 모두 조회
     @GetMapping
-    public List<FolderDto.ResponseGetAll> getAllFolders(){
+    public List<FolderDto.WoPhotoList> getAllFolders(){
         return folderService.findAllFolders().stream()
-                .map(e -> new FolderDto().new ResponseGetAll(
-                        e.getId(),
-                        e.getName(),
-                        e.getRegDate(),
-                        e.getPhotoList().size()))
+                .map(FolderDto::newDtoWoPhotoList)
                 .collect(Collectors.toList());
     }
 
     //폴더 이름으로 조회
     @GetMapping(params = {"name"})
-    public FolderDto.ResponseGetOne getFolderByName(@RequestParam String name){
-        FolderEntity folderByName = folderService.findFolderByName(name);
-        return new FolderDto().new ResponseGetOne(
-                folderByName.getId(),
-                folderByName.getName(),
-                folderByName.getRegDate(),
-                folderByName.getPhotoList().stream()
-                        .map(e -> new PhotoDto().new ResponseInFolder(
-                                e.getId(),
-                                e.getName(),
-                                e.getRegDate(),
-                                e.getMemo()
-                        ))
-                        .collect(Collectors.toList())
-        );
+    public FolderDto getFolderByName(@RequestParam String name){
+        return FolderDto.newDto(folderService.findFolderByName(name));
     }
 
     //폴더 이름 수정
     @PutMapping("/{folderId}")
-    public FolderDto.ResponseGetOne updateFolder(@PathVariable Long folderId,
-                             @RequestBody FolderDto.Request requestUpdate){
-        FolderEntity folderUpdated = folderService.updateFolder(folderId, requestUpdate.getName());
-        return new FolderDto().new ResponseGetOne(
-                folderUpdated.getId(),
-                folderUpdated.getName(),
-                folderUpdated.getRegDate(),
-                folderUpdated.getPhotoList().stream().map(
-                        e -> new PhotoDto().new ResponseInFolder(
-                                e.getId(),
-                                e.getName(),
-                                e.getRegDate(),
-                                e.getMemo()
-                        ))
-                        .collect(Collectors.toList())
-
-        );
+    public FolderDto updateFolder(@PathVariable Long folderId,
+                             @RequestBody FolderDto requestUpdate){
+        Folder folderUpdated = folderService.updateFolder(folderId, requestUpdate.getName());
+        return FolderDto.newDto(folderUpdated);
     }
 
     //폴더 삭제

@@ -1,6 +1,6 @@
 package com.example.domain;
 
-import com.example.entity.PhotoEntity;
+import com.example.entity.Photo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -15,7 +15,7 @@ public class PhotoDto{
     private String memo;
     private Long folder;
 
-    public static PhotoDto newResponse(PhotoEntity photoEntity){
+    public static PhotoDto newDto(Photo photoEntity){
         return new PhotoDto(
                 photoEntity.getId(),
                 photoEntity.getName(),

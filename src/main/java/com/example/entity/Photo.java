@@ -1,6 +1,5 @@
 package com.example.entity;
 
-import com.example.domain.PhotoDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,7 +9,7 @@ import javax.persistence.*;
 @Entity(name = "photo")
 @Getter
 @NoArgsConstructor
-public class PhotoEntity extends BaseAuditingEntity {
+public class Photo extends BaseAuditingEntity {
 
     @Id @GeneratedValue
     @Column(name = "photo_id")
@@ -25,15 +24,15 @@ public class PhotoEntity extends BaseAuditingEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "folder_id")
-    private FolderEntity folder;
+    private Folder folder;
 
-    public PhotoEntity(String name, String memo, FolderEntity folder){
+    public Photo(String name, String memo, Folder folder){
         this.name = name;
         this.memo = memo;
         this.folder = folder;
     }
 
-    public void updatePhoto(String name, String memo, FolderEntity folder){
+    public void updatePhoto(String name, String memo, Folder folder){
         this.name = name;
         this.memo = memo;
         this.folder = folder;

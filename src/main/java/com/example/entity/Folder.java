@@ -12,7 +12,7 @@ import java.util.List;
 @Entity(name = "folder")
 @Getter
 @NoArgsConstructor
-public class FolderEntity extends BaseAuditingEntity {
+public class Folder extends BaseAuditingEntity {
 
     @Id @GeneratedValue //전략 default - auto
     @Column(name = "folder_id")
@@ -24,9 +24,9 @@ public class FolderEntity extends BaseAuditingEntity {
 
     @BatchSize(size = 100)
     @OneToMany(mappedBy = "folder", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<PhotoEntity> photoList = new ArrayList<>();
+    private List<Photo> photoList = new ArrayList<>();
 
-    public FolderEntity(String name){
+    public Folder(String name){
         this.name = name;
     }
 

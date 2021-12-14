@@ -1,6 +1,6 @@
 package com.example.service;
 
-import com.example.entity.FolderEntity;
+import com.example.entity.Folder;
 import com.example.repository.FolderRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -19,24 +19,24 @@ public class FolderService {
     
     //폴더 생성
 //    @Transactional
-    public FolderEntity createFolder(String name){
-        return folderRepository.save(new FolderEntity(name));
+    public Folder createFolder(String name){
+        return folderRepository.save(new Folder(name));
     }
 
     //모든 폴더 조회
-    public List<FolderEntity> findAllFolders(){
+    public List<Folder> findAllFolders(){
         return folderRepository.findAll();
     }
 
     //폴더 조건으로 조회
-    public FolderEntity findFolderByName(String name){
+    public Folder findFolderByName(String name){
         return folderRepository.findByName(name);
     }
 
     //폴더 이름 변경
     @Transactional
-    public FolderEntity updateFolder(Long id, String name){
-        FolderEntity folderEntity = folderRepository.findById(id).orElseThrow(NoSuchElementException::new);
+    public Folder updateFolder(Long id, String name){
+        Folder folderEntity = folderRepository.findById(id).orElseThrow(NoSuchElementException::new);
         folderEntity.updateFolder(name);
         return folderEntity;
     }

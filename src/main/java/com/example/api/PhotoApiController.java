@@ -1,7 +1,7 @@
 package com.example.api;
 
 import com.example.domain.PhotoDto;
-import com.example.entity.PhotoEntity;
+import com.example.entity.Photo;
 import com.example.service.PhotoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -26,22 +26,21 @@ public class PhotoApiController {
     @GetMapping
     public List<PhotoDto> getAllPhotos(){
         return photoService.findAllPhotos().stream()
-                .map(PhotoDto::newResponse)
+                .map(PhotoDto::newDto)
                 .collect(Collectors.toList());
     }
 
     //사진 이름으로 조회
     @GetMapping(params = {"name"})
     public PhotoDto getPhotoByName(@RequestParam String name){
-        PhotoEntity photoByName = photoService.findPhotoByName(name);
-        return PhotoDto.newResponse(photoByName);
+        return PhotoDto.newDto(photoService.findPhotoByName(name));
     }
 
     //사진 경로로 조회
     @GetMapping(params = {"folderId"})
     public List<PhotoDto> getPhotoByFolder(@RequestParam Long folderId){
         return photoService.findPhotosInFolder(folderId).stream()
-                .map(PhotoDto::newResponse)
+                .map(PhotoDto::newDto)
                 .collect(Collectors.toList());
     }
 
@@ -51,8 +50,8 @@ public class PhotoApiController {
     @PutMapping("/{photoId}")
     public PhotoDto updatePhoto(@PathVariable Long photoId,
                                          @RequestBody PhotoDto requestUpdate){
-        PhotoEntity photoUpdated = photoService.updatePhoto(photoId, requestUpdate);
-        return PhotoDto.newResponse(photoUpdated);
+        Photo photoUpdated = photoService.updatePhoto(photoId, requestUpdate);
+        return PhotoDto.newDto(photoUpdated);
     }
 
     //사진 삭제
