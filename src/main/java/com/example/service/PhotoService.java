@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -48,6 +49,9 @@ public class PhotoService {
     }
 
     //사진 저장 날짜로 조회
+    public List<Photo> findPhotosInPeriod(LocalDateTime start, LocalDateTime end){
+        return photoRepository.findByRegDateBetween(start, end);
+    }
 
     //사진 정보 수정
     @Transactional
@@ -72,5 +76,4 @@ public class PhotoService {
         photoRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         photoRepository.deleteById(id);
     }
-
 }

@@ -53,7 +53,4 @@ public class FolderService {
         folderRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         folderRepository.deleteById(id);
     }
-
-
-
 }
